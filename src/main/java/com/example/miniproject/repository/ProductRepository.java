@@ -1,4 +1,4 @@
-package com.example.miniproject.product;
+package com.example.miniproject.repository;
 
 import com.example.miniproject.entity.Post;
 import org.springframework.data.jpa.repository.JpaRepository;

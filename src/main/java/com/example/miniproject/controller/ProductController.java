@@ -1,5 +1,9 @@
-package com.example.miniproject.product;
+package com.example.miniproject.controller;
 
+import com.example.miniproject.dto.request.ProductRequestDto;
+import com.example.miniproject.dto.response.ProductResponseDto;
+import com.example.miniproject.service.ProductService;
+import com.example.miniproject.dto.response.ProductsResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

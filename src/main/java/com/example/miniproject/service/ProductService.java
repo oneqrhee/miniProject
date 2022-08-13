@@ -1,6 +1,10 @@
-package com.example.miniproject.product;
+package com.example.miniproject.service;
 
+import com.example.miniproject.dto.request.ProductRequestDto;
+import com.example.miniproject.dto.response.ProductResponseDto;
 import com.example.miniproject.entity.Post;
+import com.example.miniproject.dto.response.ProductsResponseDto;
+import com.example.miniproject.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

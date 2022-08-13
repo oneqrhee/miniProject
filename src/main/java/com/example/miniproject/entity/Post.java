@@ -1,6 +1,6 @@
 package com.example.miniproject.entity;
 
-import com.example.miniproject.product.ProductRequestDto;
+import com.example.miniproject.dto.request.ProductRequestDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

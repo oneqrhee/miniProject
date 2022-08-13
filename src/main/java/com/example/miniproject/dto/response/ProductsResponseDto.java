@@ -1,4 +1,4 @@
-package com.example.miniproject.product;
+package com.example.miniproject.dto.response;
 
 import lombok.Builder;
 
