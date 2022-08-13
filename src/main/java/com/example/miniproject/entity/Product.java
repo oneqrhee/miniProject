@@ -9,7 +9,7 @@ import java.util.List;
 @Entity
 @Getter
 @NoArgsConstructor
-public class Post extends Timestamped{
+public class Product extends Timestamped{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
