@@ -4,12 +4,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
+
 import javax.persistence.*;
 
 @Getter
 @NoArgsConstructor
 @Entity
 @SuperBuilder
+
 public class Member {
 
     @Id

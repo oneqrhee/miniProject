@@ -1,5 +1,9 @@
 package com.example.miniproject.entity;
 
+
+import com.example.miniproject.dto.request.CommentRequestDto;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.OnDelete;
@@ -7,6 +11,9 @@ import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 
+
+@Builder
+@AllArgsConstructor
 @Getter
 @NoArgsConstructor
 @Entity
@@ -16,6 +23,7 @@ public class Comment extends Timestamped{
     private Long id;
 
     @Column(nullable = false)
+
     private String nickname;
 
     @Column(nullable = false)
@@ -29,4 +37,9 @@ public class Comment extends Timestamped{
     @JoinColumn
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Post post;
+
+    public void update(CommentRequestDto requestDto){
+        this.content = requestDto.getContent();
+    }
+
 }
