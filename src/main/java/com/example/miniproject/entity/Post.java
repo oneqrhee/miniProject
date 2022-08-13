@@ -31,7 +31,7 @@ public class Post extends Timestamped{
     private int price;
 
     @Column
-    private String describe;
+    private String content;
 
     @ManyToOne
     @JoinColumn(nullable = false)
