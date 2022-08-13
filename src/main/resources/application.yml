@@ -1,3 +1,24 @@
+spring.h2.console.enabled: true
+          # 로그 형식으로 쿼리 보여주기
+
+spring:
+  jpa:
+    properties:
+      hibernate.format_sql: true  # 압축된 쿼리를 읽기 좋게 포멧
+
+spring.jpa.hibernate.ddl-auto: create
+
+spring.datasource.url: jdbc:h2:mem:testdb
+spring.datasource.driverClassName: org.h2.Driver
+spring.datasource.username: sa
+spring.datasource.password:
+spring.jpa.database-platform: org.hibernate.dialect.H2Dialect
+
+logging:
+  level:
+    '[org.apache.coyote.http11]': DEBUG
+    org.hibernate.SQL: debug
+
 
 cloud:
   aws:
@@ -10,4 +31,3 @@ cloud:
       static: ap-northeast-2
     stack:
       auto: false
-

@@ -8,13 +8,14 @@ import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+
 import java.util.Collection;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class PrincipalDetails implements UserDetails {
+public class PrincipalDetails implements UserDetails{
 
     private Member member;
 
@@ -27,7 +28,7 @@ public class PrincipalDetails implements UserDetails {
     }
 
     @Override
-    public String getUsername() {  return member.getUserId(); }
+    public String getUsername() {  return member.getUsername(); }
 
 
     @Override
