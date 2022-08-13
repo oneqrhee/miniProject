@@ -1,18 +1,38 @@
 package com.example.miniproject.product;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api")
 public class ProductController {
-    private final ProductService postService;
+    private final ProductService productService;
 
-    @PostMapping("/products")
-    public void createProduct(ProductRequestDto productRequestDto){
-        postService.createProduct(productRequestDto);
+    @PostMapping("/auth/products")
+    public void createProduct(@RequestBody ProductRequestDto productRequestDto){
+        productService.createProduct(productRequestDto);
+    }
+
+    @GetMapping("/products")
+    public List<ProductsResponseDto> readAllPost(){
+        return productService.readAllPost();
+    }
+
+    @GetMapping("/products/{productId}")
+    public ProductResponseDto readPost(@PathVariable Long productId){
+        return productService.readPost(productId);
+    }
+
+    @PutMapping("/auth/products/{productId}")
+    public void updatePost(@PathVariable Long productId, @RequestBody ProductRequestDto productRequestDto){
+        productService.updateProduct(productId, productRequestDto);
+    }
+
+    @DeleteMapping("/auth/products/{productId}")
+    public void deletePost(@PathVariable Long productId){
+        productService.deleteProduct(productId);
     }
 }
