@@ -1,10 +1,13 @@
 package com.example.miniproject.service;
 
+import com.example.miniproject.config.jwt.token.RequestToken;
 import com.example.miniproject.dto.request.CommentRequestDto;
 import com.example.miniproject.dto.response.CommentResponseDto;
 import com.example.miniproject.entity.Comment;
+import com.example.miniproject.entity.Member;
 import com.example.miniproject.entity.Product;
 import com.example.miniproject.repository.CommentRepository;
+import com.example.miniproject.repository.MemberRepository;
 import com.example.miniproject.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -23,10 +26,16 @@ public class CommentService {
 
     private final ProductRepository productRepository;
 
+    private final MemberRepository memberRepository;
+
+
     @Transactional
     public CommentResponseDto createComment(CommentRequestDto requestDto, HttpServletRequest request) {
-
         // 멤버 유효성 검사
+        RequestToken requestToken = new RequestToken(request); // servelet에서 토큰 가져오기
+
+        Member member = memberRepository.findByUsername(requestToken.getUsername().orElseThrow(
+                () -> new IllegalArgumentException("Can not find username"))).orElseThrow();
 
         //포스트 id 검사
         Product product = productRepository.findById(requestDto.getProductId()).orElseThrow(
@@ -34,7 +43,7 @@ public class CommentService {
         );
 
         Comment comment = Comment.builder()
-//                .member(member)
+                .member(member)
                 .product(product)
                 .content(requestDto.getContent())
                 .build();
@@ -52,7 +61,6 @@ public class CommentService {
     }
 
     public CommentResponseDto getAllComments(Long id) {
-
         // 포스트 id 검사
         Product product = productRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException("게시글이 존재하지 않습니다.")
@@ -77,8 +85,10 @@ public class CommentService {
 
     public CommentResponseDto updateComment(Long id, CommentRequestDto requestDto,
                                             HttpServletRequest request) {
-
         //멤버 유효성 검사
+        RequestToken requestToken = new RequestToken(request); // servelet에서 토큰 가져오기
+        requestToken.getUsername().orElseThrow(
+                () -> new IllegalArgumentException("Can not find username"));
 
         //포스트 id 검사
         Product product = productRepository.findById(id).orElseThrow(
@@ -105,6 +115,9 @@ public class CommentService {
     }
 
     public void deleteComment(Long id, HttpServletRequest request) {
+        RequestToken requestToken = new RequestToken(request); // servelet에서 토큰 가져오기
+        requestToken.getUsername().orElseThrow(
+                () -> new IllegalArgumentException("Can not find username"));
 
         //멤버 유효성 검사
 

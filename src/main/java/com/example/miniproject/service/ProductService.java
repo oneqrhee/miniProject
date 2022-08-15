@@ -4,16 +4,16 @@ import com.example.miniproject.dto.request.ProductRequestDto;
 import com.example.miniproject.dto.response.CommentResponseDto;
 import com.example.miniproject.dto.response.ProductResponseDto;
 import com.example.miniproject.dto.response.ProductsResponseDto;
-import com.example.miniproject.entity.Comment;
-import com.example.miniproject.entity.Likes;
-import com.example.miniproject.entity.Product;
+import com.example.miniproject.entity.*;
 import com.example.miniproject.repository.CommentRepository;
 import com.example.miniproject.repository.LikesRepository;
+import com.example.miniproject.repository.MemberRepository;
 import com.example.miniproject.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,13 +27,21 @@ public class ProductService {
 
     private final LikesRepository likesRepository;
 
+    private final MemberRepository memberRepository;
+
     @Transactional
-    public void createProduct(ProductRequestDto productRequestDto) {
+    public void createProduct(ProductRequestDto productRequestDto , String username) {
+        Member member = memberRepository.findByUsername(username).orElseThrow();
+
         Product product = Product.builder()
                 .title(productRequestDto.getTitle())
                 .size(productRequestDto.getSize())
                 .price(productRequestDto.getPrice())
                 .content(productRequestDto.getContent())
+                .nickname(member.getNickname())
+                .member(member)
+                .createdAt(LocalDateTime.now())
+                .modifiedAt(LocalDateTime.now())
                 .build();
         productRepository.save(product);
 
@@ -97,10 +105,12 @@ public class ProductService {
         productRepository.deleteById(productId);
     }
 
+
     // 좋아요 개수 나타내기
     @Transactional
     public int countLikes(Product product){
         List<Likes> likesList = likesRepository.findAllByProduct(product);
         return likesList.size();
     }
+
 }

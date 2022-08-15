@@ -1,5 +1,6 @@
 package com.example.miniproject.entity;
 
+
 import com.example.miniproject.dto.request.CommentRequestDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,6 +11,7 @@ import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 
+
 @Builder
 @AllArgsConstructor
 @Getter
@@ -19,6 +21,10 @@ public class Comment extends Timestamped{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(nullable = false)
+
+    private String nickname;
 
     @Column(nullable = false)
     private String content;

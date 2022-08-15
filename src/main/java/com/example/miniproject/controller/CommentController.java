@@ -15,7 +15,7 @@ public class CommentController {
     private final CommentService commentService;
 
     @PostMapping("/api/comment")
-    public CommentResponseDto createComment(@RequestBody CommentRequestDto requestDto, HttpServletRequest request){
+    public CommentResponseDto createComment(@RequestBody CommentRequestDto requestDto, HttpServletRequest request) {
         return commentService.createComment(requestDto, request);
     }
 

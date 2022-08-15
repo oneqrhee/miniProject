@@ -11,6 +11,7 @@ public class ProductResponseDto {
     private String title;
     private int size;
     private int price;
+    private String nickname;
     private String content;
     private List<CommentResponseDto> commentList;
     private LocalDateTime createdAt;

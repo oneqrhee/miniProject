@@ -1,9 +1,11 @@
 package com.example.miniproject.service;
 
+import com.example.miniproject.config.jwt.token.RequestToken;
 import com.example.miniproject.entity.Likes;
 import com.example.miniproject.entity.Member;
 import com.example.miniproject.entity.Product;
 import com.example.miniproject.repository.LikesRepository;
+import com.example.miniproject.repository.MemberRepository;
 import com.example.miniproject.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,10 +22,15 @@ public class LikesService {
 
     private final ProductRepository productRepository;
 
+    private final MemberRepository memberRepository;
+
     @Transactional
     public void likesProduct(Long id, HttpServletRequest request) {
-
         //멤버 유효성 검사
+        RequestToken requestToken = new RequestToken(request); // servelet에서 토큰 가져오기
+
+        Member member = memberRepository.findByUsername(requestToken.getUsername().orElseThrow(
+                () -> new IllegalArgumentException("Can not find username"))).orElseThrow();
 
         //포스트 id 검사
         Product product = productRepository.findById(id).orElseThrow(
