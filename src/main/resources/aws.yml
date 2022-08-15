@@ -1,0 +1,11 @@
+cloud:
+  aws:
+    credentials:
+      accessKey: AKIARE5TNUV55SNW5HPQ
+      secretKey: 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
+    s3:
+      bucket: cheoljunvucket
+    region:
+      static: ap-northeast-2
+    stack:
+      auto: false
