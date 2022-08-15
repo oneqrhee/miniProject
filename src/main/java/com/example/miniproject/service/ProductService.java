@@ -26,13 +26,8 @@ public class ProductService {
     private final MemberRepository memberRepository;
 
     @Transactional
-    public void createProduct(ProductRequestDto productRequestDto , HttpServletRequest request) {
-        RequestToken requestToken = new RequestToken(request); // servelet에서 토큰 가져오기
-        String username = requestToken.getUsername().orElseThrow(
-                () -> new IllegalArgumentException("Can not find username"));
+    public void createProduct(ProductRequestDto productRequestDto , String username) {
         Member member = memberRepository.findByUsername(username).orElseThrow();
-
-
 
         Post post = Post.builder()
                 .title(productRequestDto.getTitle())
