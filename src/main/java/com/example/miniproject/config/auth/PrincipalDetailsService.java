@@ -1,7 +1,7 @@
 package com.example.miniproject.config.auth;
 
 import com.example.miniproject.entity.Member;
-import com.example.miniproject.signup.MemberRepository;
+import com.example.miniproject.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

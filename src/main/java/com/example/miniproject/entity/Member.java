@@ -1,21 +1,20 @@
 package com.example.miniproject.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.experimental.SuperBuilder;
-
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
-@Getter
-@Setter
-@NoArgsConstructor
+@Builder
+@AllArgsConstructor
 @Entity
-@SuperBuilder
+@Getter
+@NoArgsConstructor
 
-public class Member {
+public class Member extends Timestamped{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,10 +23,18 @@ public class Member {
     @Column(nullable = false, unique = true)
     private String username;
 
-    @JsonIgnore
     @Column(nullable = false)
     private String password;
 
     @Column(nullable = false, unique = true)
     private String nickname;
+
+    @Column
+    private LocalDateTime createdAt;
+
+
+
+
+
+
 }

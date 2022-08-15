@@ -1,4 +1,4 @@
-package com.example.miniproject.signup;
+package com.example.miniproject.repository;
 
 import com.example.miniproject.entity.Member;
 import org.springframework.data.jpa.repository.JpaRepository;

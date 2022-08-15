@@ -32,10 +32,6 @@ public class Post extends Timestamped{
 
 
     @Column(nullable = false)
-    private String nickname;
-
-
-    @Column(nullable = false)
     private int size;
 
     @Column(nullable = false)
@@ -43,6 +39,9 @@ public class Post extends Timestamped{
 
     @Column
     private String content;
+
+    @Column
+    private String nickname;
 
     @ManyToOne
     @JoinColumn(nullable = false)

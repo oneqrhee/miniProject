@@ -35,6 +35,8 @@ public class ResponseToken {
                 .withClaim("username", principalDetails.getMember().getUsername())
                 .sign(Algorithm.HMAC512(CommonTokenProperties.SECRET));
     }
+
+
 }
 
 

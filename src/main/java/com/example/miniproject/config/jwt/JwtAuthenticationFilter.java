@@ -1,10 +1,13 @@
 package com.example.miniproject.config.jwt;
 
 import com.example.miniproject.config.auth.PrincipalDetails;
+import com.example.miniproject.config.jwt.token.RequestToken;
 import com.example.miniproject.config.jwt.token.ResponseToken;
+import com.example.miniproject.dto.response.ResponseDto;
 import com.example.miniproject.entity.Member;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -16,26 +19,33 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     private final AuthenticationManager authenticationManager;
 
 
+
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
+
         try {
-            ObjectMapper objectMapper = new ObjectMapper();
-            Member member = objectMapper.readValue(request.getInputStream(),Member.class);
-            UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(member.getUsername(),member.getPassword());
-            Authentication authentication = authenticationManager.authenticate(token);
+            ObjectMapper om = new ObjectMapper();
+            Member user = om.readValue(request.getInputStream(), Member.class);
+            UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword());
+            return authenticationManager.authenticate(token);
 
-            return authentication;
-
-        } catch (IOException e){
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
+
+    }
+
+    public ResponseDto<String> viewStatus(String username){
+
+        return new ResponseDto<>(HttpStatus.OK,username +"님, 로그인 완료");
     }
 
     @Override
