@@ -3,7 +3,7 @@ package com.example.miniproject.config;
 
 import com.example.miniproject.config.jwt.JwtAuthenticationFilter;
 import com.example.miniproject.config.jwt.JwtAuthorizationFilter;
-import com.example.miniproject.signup.MemberRepository;
+import com.example.miniproject.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -41,8 +41,10 @@ public class SecurityConfig {
                 .formLogin().disable()
                 .httpBasic().disable()
                 .authorizeRequests()
-                .anyRequest().permitAll()
-                .and().build();
+                .anyRequest()
+                .permitAll()
+                .and()
+                .build();
     }
 
     public class MyCustomDsl extends AbstractHttpConfigurer<MyCustomDsl, HttpSecurity> {

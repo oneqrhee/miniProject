@@ -1,9 +1,12 @@
 package com.example.miniproject.service;
 
+import com.example.miniproject.config.jwt.token.RequestToken;
 import com.example.miniproject.entity.Likes;
 import com.example.miniproject.entity.Member;
 import com.example.miniproject.entity.Post;
 import com.example.miniproject.repository.LikesRepository;
+import com.example.miniproject.repository.MemberRepository;
+import com.example.miniproject.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,12 +20,18 @@ public class LikesService {
 
     private final LikesRepository likesRepository;
 
-    @Transactional
-    public void likesPost(Long id, HttpServletRequest request) {
+    private final MemberRepository memberRepository;
+    private final ProductRepository productRepository;
 
+    @Transactional
+    public void likesPost(Long id, String username) {
+
+        Member member = memberRepository.findByUsername(username).orElseThrow();
         //멤버 유효성 검사
 
         //포스트 id 검사
+        Post post = productRepository.findById(id).orElseThrow(
+                () -> new IllegalArgumentException("게시글이 존재하지 않습니다."));
 
         Likes likes = isPresentLikes(member, post);
         if (null == likes){
@@ -35,7 +44,6 @@ public class LikesService {
         } else{
             likesRepository.delete(likes);
         }
-
     }
 
     @Transactional

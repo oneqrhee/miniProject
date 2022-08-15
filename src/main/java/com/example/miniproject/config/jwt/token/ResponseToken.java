@@ -22,7 +22,7 @@ public class ResponseToken {
     }
 
     public ResponseToken(String name) {
-        Member member = Member.builder().userId(name).build();
+        Member member = Member.builder().username(name).build();
         this.principalDetails = new PrincipalDetails(member);
         accessToken = makeToken("accessToken", AccessTokenProperties.EXPIRE_TIME);
     }
@@ -32,9 +32,11 @@ public class ResponseToken {
         return JWT.create()
                 .withSubject(tokenName)
                 .withExpiresAt(new Date(System.currentTimeMillis() + expire))
-                .withClaim("username", principalDetails.getMember().getUserId())
+                .withClaim("username", principalDetails.getMember().getUsername())
                 .sign(Algorithm.HMAC512(CommonTokenProperties.SECRET));
     }
+
+
 }
 
 

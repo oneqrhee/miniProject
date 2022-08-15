@@ -3,7 +3,7 @@ package com.example.miniproject.config.jwt;
 import com.example.miniproject.config.jwt.token.RequestToken;
 import com.example.miniproject.config.jwt.token.properties.AccessTokenProperties;
 import com.example.miniproject.config.jwt.token.properties.CommonTokenProperties;
-import com.example.miniproject.signup.MemberRepository;
+import com.example.miniproject.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.web.AuthenticationEntryPoint;

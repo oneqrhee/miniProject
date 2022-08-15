@@ -1,5 +1,6 @@
 package com.example.miniproject.controller;
 
+import com.example.miniproject.config.jwt.token.RequestToken;
 import com.example.miniproject.service.LikesService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,8 +15,14 @@ public class LikesController {
 
     private final LikesService likesService;
 
-    @PostMapping("/api/auth/likes/{id}")
+    private String getUsernameByRequest(HttpServletRequest request){
+        RequestToken requestToken = new RequestToken(request);
+        return requestToken.getUsername().orElseThrow();
+    }
+
+    @PostMapping("/api/likes/{id}")
     public void likesPost(@PathVariable Long id, HttpServletRequest request){
-        likesService.likesPost(id, request);
+
+        likesService.likesPost(id, getUsernameByRequest(request));
     }
 }

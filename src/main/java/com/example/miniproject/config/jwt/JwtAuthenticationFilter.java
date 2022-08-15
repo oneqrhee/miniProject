@@ -2,9 +2,11 @@ package com.example.miniproject.config.jwt;
 
 import com.example.miniproject.config.auth.PrincipalDetails;
 import com.example.miniproject.config.jwt.token.ResponseToken;
+import com.example.miniproject.dto.response.ResponseDto;
 import com.example.miniproject.entity.Member;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -22,21 +24,27 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     private final AuthenticationManager authenticationManager;
 
 
+
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
+
         try {
-            ObjectMapper objectMapper = new ObjectMapper();
-            Member member = objectMapper.readValue(request.getInputStream(),Member.class);
-            UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(member.getUserId(),member.getPassword());
+            ObjectMapper om = new ObjectMapper();
+            Member user = om.readValue(request.getInputStream(), Member.class);
+
+            UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword());
             Authentication authentication = authenticationManager.authenticate(token);
 
+            //PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
             return authentication;
 
-        } catch (IOException e){
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
+
     }
+
 
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response,
