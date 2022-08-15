@@ -21,22 +21,22 @@ public class ProductController {
     }
 
     @GetMapping("/products")
-    public List<ProductsResponseDto> readAllPost(){
+    public List<ProductsResponseDto> readAllProduct(){
         return productService.readAllPost();
     }
 
     @GetMapping("/products/{productId}")
-    public ProductResponseDto readPost(@PathVariable Long productId){
+    public ProductResponseDto readProduct(@PathVariable Long productId){
         return productService.readPost(productId);
     }
 
     @PutMapping("/auth/products/{productId}")
-    public void updatePost(@PathVariable Long productId, @RequestBody ProductRequestDto productRequestDto){
+    public void updateProduct(@PathVariable Long productId, @RequestBody ProductRequestDto productRequestDto){
         productService.updateProduct(productId, productRequestDto);
     }
 
     @DeleteMapping("/auth/products/{productId}")
-    public void deletePost(@PathVariable Long productId){
+    public void deleteProduct(@PathVariable Long productId){
         productService.deleteProduct(productId);
     }
 }

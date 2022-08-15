@@ -27,5 +27,5 @@ public class Likes {
     @ManyToOne
     @JoinColumn
     @OnDelete(action = OnDeleteAction.CASCADE)
-    private Post post;
+    private Product product;
 }

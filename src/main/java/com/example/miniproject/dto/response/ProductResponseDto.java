@@ -12,7 +12,7 @@ public class ProductResponseDto {
     private int size;
     private int price;
     private String content;
-    private List<Comment> commentList;
+    private List<CommentResponseDto> commentList;
     private LocalDateTime createdAt;
     private LocalDateTime modifiedAt;
 }

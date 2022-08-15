@@ -1,9 +1,14 @@
 package com.example.miniproject.service;
 
 import com.example.miniproject.dto.request.ProductRequestDto;
+import com.example.miniproject.dto.response.CommentResponseDto;
 import com.example.miniproject.dto.response.ProductResponseDto;
-import com.example.miniproject.entity.Post;
 import com.example.miniproject.dto.response.ProductsResponseDto;
+import com.example.miniproject.entity.Comment;
+import com.example.miniproject.entity.Likes;
+import com.example.miniproject.entity.Product;
+import com.example.miniproject.repository.CommentRepository;
+import com.example.miniproject.repository.LikesRepository;
 import com.example.miniproject.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,28 +23,32 @@ import java.util.List;
 public class ProductService {
     private final ProductRepository productRepository;
 
+    private final CommentRepository commentRepository;
+
+    private final LikesRepository likesRepository;
+
     @Transactional
     public void createProduct(ProductRequestDto productRequestDto) {
-        Post post = Post.builder()
+        Product product = Product.builder()
                 .title(productRequestDto.getTitle())
                 .size(productRequestDto.getSize())
                 .price(productRequestDto.getPrice())
                 .content(productRequestDto.getContent())
                 .build();
-        productRepository.save(post);
+        productRepository.save(product);
 
     }
 
     @Transactional(readOnly = true)
     public List<ProductsResponseDto> readAllPost() {
-        List<Post> posts = productRepository.findAll();
+        List<Product> products = productRepository.findAll();
         List<ProductsResponseDto> postList = new ArrayList<>();
-        for (Post post : posts) {
+        for (Product product : products) {
             postList.add(ProductsResponseDto.builder()
-                    .title(post.getTitle())
-                    .size(post.getSize())
-                    .createdAt(post.getCreatedAt())
-                    .modifiedAt(post.getModifiedAt())
+                    .title(product.getTitle())
+                    .size(product.getSize())
+                    .createdAt(product.getCreatedAt())
+                    .modifiedAt(product.getModifiedAt())
                     .build());
         }
         return postList;
@@ -47,28 +56,51 @@ public class ProductService {
 
     @Transactional(readOnly = true)
     public ProductResponseDto readPost(Long productId) {
-        Post post = productRepository.findById(productId)
+        Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new IllegalArgumentException("게시글이 존재하지 않습니다."));
+
+        List<Comment> commentList = commentRepository.findAllByProduct(product);
+        List<CommentResponseDto> commentResponseDtoList = new ArrayList<>();
+
+        for (Comment comment : commentList){
+            commentResponseDtoList.add(
+                    CommentResponseDto.builder()
+                            .id(comment.getId())
+                            .nickname(comment.getMember().getNickname())
+                            .content(comment.getContent())
+                            .createdAt(comment.getCreatedAt())
+                            .modifiedAt(comment.getModifiedAt())
+                            .build()
+            );
+        }
+
         return ProductResponseDto.builder()
-                .title(post.getTitle())
-                .size(post.getSize())
-                .price(post.getPrice())
-                .content(post.getContent())
-                .commentList(post.getCommentList())
-                .createdAt(post.getCreatedAt())
-                .modifiedAt(post.getModifiedAt())
+                .title(product.getTitle())
+                .size(product.getSize())
+                .price(product.getPrice())
+                .content(product.getContent())
+                .commentList(commentResponseDtoList)
+                .createdAt(product.getCreatedAt())
+                .modifiedAt(product.getModifiedAt())
                 .build();
     }
 
     @Transactional
     public void updateProduct(Long productId, ProductRequestDto productRequestDto){
-        Post post = productRepository.findById(productId)
+        Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new IllegalArgumentException("게시글이 존재하지 않습니다."));
-        post.updatePost(productRequestDto);
+        product.updateProduct(productRequestDto);
     }
 
     @Transactional
     public void deleteProduct(Long productId){
         productRepository.deleteById(productId);
+    }
+
+    // 좋아요 개수 나타내기
+    @Transactional
+    public int countLikes(Product product){
+        List<Likes> likesList = likesRepository.findAllByProduct(product);
+        return likesList.size();
     }
 }
