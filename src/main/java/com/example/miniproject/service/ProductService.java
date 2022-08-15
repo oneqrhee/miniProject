@@ -1,11 +1,14 @@
 package com.example.miniproject.service;
 
+import com.example.miniproject.config.jwt.token.RequestToken;
 import com.example.miniproject.dto.request.ProductRequestDto;
 import com.example.miniproject.dto.response.CommentResponseDto;
 import com.example.miniproject.dto.response.ProductResponseDto;
+import com.example.miniproject.entity.Member;
 import com.example.miniproject.entity.Post;
 import com.example.miniproject.dto.response.ProductsResponseDto;
 import com.example.miniproject.repository.LikesRepository;
+import com.example.miniproject.repository.MemberRepository;
 import com.example.miniproject.repository.ProductRepository;
 import com.example.miniproject.s3Service.S3Uploader;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -26,15 +30,24 @@ public class ProductService {
     private final S3Uploader s3Uploader;
     private final LikesRepository likesRepository;
 
+    private final MemberRepository memberRepository;
+
     @Transactional
-    public void createProduct(MultipartFile multipartFile, ProductRequestDto productRequestDto) throws IOException {
+    public void createProduct(MultipartFile multipartFile, ProductRequestDto productRequestDto,
+                              String username) throws IOException {
         String imgUrl = s3Uploader.upload(multipartFile, "upload");
+        Member member = memberRepository.findByUsername(username).orElseThrow();
+
         Post post = Post.builder()
                 .title(productRequestDto.getTitle())
                 .imgUrl(imgUrl)
                 .size(productRequestDto.getSize())
                 .price(productRequestDto.getPrice())
                 .content(productRequestDto.getContent())
+                .nickname(member.getNickname())
+                .member(member)
+                .createdAt(LocalDateTime.now())
+                .modifiedAt(LocalDateTime.now())
                 .build();
         productRepository.save(post);
     }
@@ -47,6 +60,8 @@ public class ProductService {
             postList.add(ProductsResponseDto.builder()
                     .title(post.getTitle())
                     .size(post.getSize())
+                    .nickname(post.getNickname())
+                    .imgUrl(post.getImgUrl())
                     .likesCnt(likesRepository.findAllByPost(post).size())
                     .createdAt(post.getCreatedAt())
                     .modifiedAt(post.getModifiedAt())
@@ -62,8 +77,10 @@ public class ProductService {
         return ProductResponseDto.builder()
                 .title(post.getTitle())
                 .size(post.getSize())
+                .nickname(post.getNickname())
                 .price(post.getPrice())
                 .content(post.getContent())
+                .imgUrl(post.getImgUrl())
                 .likesCnt(likesRepository.findAllByPost(post).size())
                 .commentList(post.getCommentList().stream().map(CommentResponseDto::new).collect(Collectors.toList()))
                 .createdAt(post.getCreatedAt())

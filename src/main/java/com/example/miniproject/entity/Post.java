@@ -53,6 +53,8 @@ public class Post extends Timestamped{
     @JoinColumn(nullable = false)
     private Member member;
 
+
+
     @OneToMany(mappedBy = "post")
     private List<Comment> commentList;
 

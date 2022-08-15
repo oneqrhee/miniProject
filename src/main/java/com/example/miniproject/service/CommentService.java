@@ -28,8 +28,10 @@ public class CommentService {
 
     private final ProductRepository productRepository;
 
+
     @Transactional
     public CommentResponseDto createComment(Long post_id, CommentRequestDto requestDto, HttpServletRequest request) {
+
         RequestToken requestToken = new RequestToken(request); // servelet에서 토큰 가져오기
 
         Member member = memberRepository.findByUsername(requestToken.getUsername().orElseThrow(
