@@ -1,14 +1,19 @@
 package com.example.miniproject.service;
 
+import com.example.miniproject.config.jwt.token.RequestToken;
 import com.example.miniproject.dto.request.ProductRequestDto;
 import com.example.miniproject.dto.response.ProductResponseDto;
+import com.example.miniproject.entity.Member;
 import com.example.miniproject.entity.Post;
 import com.example.miniproject.dto.response.ProductsResponseDto;
+import com.example.miniproject.repository.MemberRepository;
 import com.example.miniproject.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpServletRequest;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,13 +23,26 @@ import java.util.List;
 public class ProductService {
     private final ProductRepository productRepository;
 
+    private final MemberRepository memberRepository;
+
     @Transactional
-    public void createProduct(ProductRequestDto productRequestDto) {
+    public void createProduct(ProductRequestDto productRequestDto , HttpServletRequest request) {
+        RequestToken requestToken = new RequestToken(request); // servelet에서 토큰 가져오기
+        String username = requestToken.getUsername().orElseThrow(
+                () -> new IllegalArgumentException("Can not find username"));
+        Member member = memberRepository.findByUsername(username).orElseThrow();
+
+
+
         Post post = Post.builder()
                 .title(productRequestDto.getTitle())
                 .size(productRequestDto.getSize())
                 .price(productRequestDto.getPrice())
                 .content(productRequestDto.getContent())
+                .nickname(member.getNickname())
+                .member(member)
+                .createdAt(LocalDateTime.now())
+                .modifiedAt(LocalDateTime.now())
                 .build();
         productRepository.save(post);
 
@@ -71,4 +89,6 @@ public class ProductService {
     public void deleteProduct(Long productId){
         productRepository.deleteById(productId);
     }
+
+
 }

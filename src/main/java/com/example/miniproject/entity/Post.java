@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -43,9 +44,17 @@ public class Post extends Timestamped{
     @Column
     private String nickname;
 
+    @Column
+    private LocalDateTime createdAt;
+
+    @Column
+    private LocalDateTime modifiedAt;
+
     @ManyToOne
     @JoinColumn(nullable = false)
     private Member member;
+
+
 
     @OneToMany(mappedBy = "post")
     private List<Comment> commentList;
