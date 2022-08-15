@@ -24,10 +24,8 @@ public class LikesService {
     private final ProductRepository productRepository;
 
     @Transactional
-    public void likesPost(Long id, HttpServletRequest request) {
-        RequestToken requestToken = new RequestToken(request); // servelet에서 토큰 가져오기
-        String username = requestToken.getUsername().orElseThrow(
-                () -> new IllegalArgumentException("Can not find username"));
+    public void likesPost(Long id, String username) {
+
         Member member = memberRepository.findByUsername(username).orElseThrow();
         //멤버 유효성 검사
 

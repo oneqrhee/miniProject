@@ -25,7 +25,7 @@ public class ProductController {
     public void createProduct(@RequestBody ProductRequestDto productRequestDto, HttpServletRequest request){
 
 
-        productService.createProduct(productRequestDto, request);
+        productService.createProduct(productRequestDto, getUsernameByRequest(request));
     }
 
     @GetMapping("/products")
@@ -47,4 +47,11 @@ public class ProductController {
     public void deletePost(@PathVariable Long productId){
         productService.deleteProduct(productId);
     }
+
+
+    private String getUsernameByRequest(HttpServletRequest request){
+        RequestToken requestToken = new RequestToken(request);
+        return requestToken.getUsername().orElseThrow();
+    }
+
 }
