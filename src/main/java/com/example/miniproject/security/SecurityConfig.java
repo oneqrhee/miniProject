@@ -45,7 +45,10 @@ public class SecurityConfig {
                 .httpBasic().disable()
                 .csrf().disable() //Csrf 토큰요청 기능 OFF( JWT나 OAuth2 사용시 불필요)
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);//RestApi 이므로 Statless, 세션 사용안함.
-
+        http
+                .authorizeRequests()
+                .antMatchers("/api/member/**", "/api/products/**").permitAll()
+                .anyRequest().authenticated();
 
 
 
@@ -58,11 +61,11 @@ public class SecurityConfig {
             AuthenticationManager authenticationManager = http.getSharedObject(AuthenticationManager.class);
             http
                     .addFilter(config.corsFilter())
-                    .addFilter(new JwtAuthorizationFilter(authenticationManager))
+                    .addFilter(new JwtAuthorizationFilter(authenticationManager));
 
-                    .authorizeRequests()
-                    .antMatchers("/api/member/**", "/api/products/**").permitAll()
-                    .anyRequest().authenticated();
+//                    .authorizeRequests()
+//                    .antMatchers("/api/member/**", "/api/products/**").permitAll()
+//                    .anyRequest().authenticated();
 
 
         }
