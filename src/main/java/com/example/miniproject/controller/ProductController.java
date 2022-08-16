@@ -34,8 +34,8 @@ public class ProductController {
     }
 
     @GetMapping("/product/{productId}")
-    public ProductResponseDto readProduct(@PathVariable Long productId) {
-        return productService.readProduct(productId);
+    public ProductResponseDto readProduct(@PathVariable Long productId, HttpServletRequest request) {
+        return productService.readProduct(productId , request);
     }
 
     @PutMapping("/product/{productId}")

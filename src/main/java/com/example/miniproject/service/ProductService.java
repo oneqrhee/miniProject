@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -72,7 +73,11 @@ public class ProductService {
     }
 
     @Transactional(readOnly = true)
-    public ProductResponseDto readProduct(Long productId) {
+    public ProductResponseDto readProduct(Long productId , HttpServletRequest request) {
+        RequestToken requestToken = new RequestToken(request);
+        Member member = memberRepository.findByUsername(requestToken.getUsername().orElseThrow(
+                () -> new IllegalArgumentException("Can not find username"))).orElseThrow();
+
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new IllegalArgumentException("게시글이 존재하지 않습니다."));
         return ProductResponseDto.builder()

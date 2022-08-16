@@ -31,7 +31,6 @@ logging:
   level:
     '[org.apache.coyote.http11]': DEBUG
     org.hibernate.SQL: debug
-    org.hibernate.type: trace
 
 
 cloud:

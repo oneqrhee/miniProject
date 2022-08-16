@@ -1,7 +1,5 @@
 package com.example.miniproject.security;
 
-
-import com.example.miniproject.repository.MemberRepository;
 import com.example.miniproject.security.config.jwt.JwtAuthorizationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +17,6 @@ import org.springframework.security.web.SecurityFilterChain;
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-    @Autowired
-    private MemberRepository memberRepository;
 
     @Autowired
     private CorsConfig config;
@@ -44,12 +40,14 @@ public class SecurityConfig {
                 .formLogin().disable()
                 .httpBasic().disable()
                 .csrf().disable() //Csrf 토큰요청 기능 OFF( JWT나 OAuth2 사용시 불필요)
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);//RestApi 이므로 Statless, 세션 사용안함.
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                        ;
+
         http
                 .authorizeRequests()
+                .antMatchers("/", "/**").permitAll()
                 .antMatchers("/api/member/**", "/api/products/**").permitAll()
                 .anyRequest().authenticated();
-
 
 
         return http.build();
@@ -59,9 +57,14 @@ public class SecurityConfig {
         @Override
         public void configure(HttpSecurity http) throws Exception {
             AuthenticationManager authenticationManager = http.getSharedObject(AuthenticationManager.class);
-            http
+            http.authorizeRequests()
+                    .antMatchers("/", "/**").permitAll()
+                    .antMatchers("/api/member/**", "/api/products/**").permitAll()
+                    .anyRequest().authenticated()
+                    .and()
                     .addFilter(config.corsFilter())
                     .addFilter(new JwtAuthorizationFilter(authenticationManager));
+
 
 //                    .authorizeRequests()
 //                    .antMatchers("/api/member/**", "/api/products/**").permitAll()
