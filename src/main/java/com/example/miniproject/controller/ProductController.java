@@ -21,38 +21,36 @@ import java.util.List;
 public class ProductController {
     private final ProductService productService;
 
-
-    @PostMapping("/auth/products")
-
+    @PostMapping("/products")
     public void createProduct(@RequestPart MultipartFile multipartFile, @RequestPart ProductRequestDto productRequestDto,
                               HttpServletRequest request) throws IOException {
         productService.createProduct(multipartFile, productRequestDto, getUsernameByRequest(request));
-        }
-
-        @GetMapping("/products")
-        public List<ProductsResponseDto> readAllPost () {
-            return productService.readAllPost();
-        }
-
-        @GetMapping("/products/{productId}")
-        public ProductResponseDto readPost (@PathVariable Long productId){
-            return productService.readPost(productId);
-        }
-
-        @PutMapping("/auth/products/{productId}")
-        public void updatePost (@PathVariable Long productId, @RequestBody ProductRequestDto productRequestDto){
-            productService.updateProduct(productId, productRequestDto);
-        }
-
-        @DeleteMapping("/auth/products/{productId}")
-        public void deletePost (@PathVariable Long productId){
-            productService.deleteProduct(productId);
-        }
-
-
-        private String getUsernameByRequest (HttpServletRequest request){
-            RequestToken requestToken = new RequestToken(request);
-            return requestToken.getUsername().orElseThrow();
-        }
-
     }
+
+    @GetMapping("/products")
+    public List<ProductsResponseDto> readAllPost() {
+        return productService.readAllPost();
+    }
+
+    @GetMapping("/products/{productId}")
+    public ProductResponseDto readPost(@PathVariable Long productId) {
+        return productService.readPost(productId);
+    }
+
+    @PutMapping("/products/{productId}")
+    public void updatePost(@PathVariable Long productId, @RequestBody ProductRequestDto productRequestDto) {
+        productService.updateProduct(productId, productRequestDto);
+    }
+
+    @DeleteMapping("/products/{productId}")
+    public void deletePost(@PathVariable Long productId) {
+        productService.deleteProduct(productId);
+    }
+
+
+    private String getUsernameByRequest(HttpServletRequest request) {
+        RequestToken requestToken = new RequestToken(request);
+        return requestToken.getUsername().orElseThrow();
+    }
+
+}

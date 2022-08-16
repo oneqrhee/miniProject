@@ -23,7 +23,4 @@ public class MemberController {
     public ResponseDto<String> signup(@RequestBody MemberRequestDto requestDto){
         return memberService.signup(requestDto);
     }
-
-
-
 }

@@ -64,7 +64,7 @@ public class MyPageService {
                     .title(post.getTitle())
                     .nickname(post.getMember().getNickname())
                     .imgUrl(post.getImgUrl())
-                    .size((post.getSize()))
+                    .size(post.getSize())
                     .likesCnt(likesRepository.findAllByPost(post).size())
                     .modifiedAt(post.getModifiedAt())
                     .createdAt(post.getCreatedAt())
