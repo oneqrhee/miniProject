@@ -1,9 +1,9 @@
-package com.example.miniproject.config.jwt.token;
+package com.example.miniproject.security.config.jwt.token;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.example.miniproject.config.jwt.token.properties.AccessTokenProperties;
-import com.example.miniproject.config.jwt.token.properties.CommonTokenProperties;
+import com.example.miniproject.security.config.jwt.token.properties.AccessTokenProperties;
+import com.example.miniproject.security.config.jwt.token.properties.CommonTokenProperties;
 import lombok.Data;
 
 import javax.servlet.http.HttpServletRequest;

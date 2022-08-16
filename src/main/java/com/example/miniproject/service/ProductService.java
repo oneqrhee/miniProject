@@ -1,27 +1,25 @@
 package com.example.miniproject.service;
 
-import com.example.miniproject.config.jwt.token.RequestToken;
 import com.example.miniproject.dto.request.ProductRequestDto;
 import com.example.miniproject.dto.response.CommentResponseDto;
 import com.example.miniproject.dto.response.ProductResponseDto;
+import com.example.miniproject.dto.response.ProductsResponseDto;
 import com.example.miniproject.entity.Member;
 import com.example.miniproject.entity.Post;
-import com.example.miniproject.dto.response.ProductsResponseDto;
 import com.example.miniproject.repository.LikesRepository;
 import com.example.miniproject.repository.MemberRepository;
 import com.example.miniproject.repository.ProductRepository;
 import com.example.miniproject.s3Service.S3Uploader;
+import com.example.miniproject.security.config.jwt.token.RequestToken;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
