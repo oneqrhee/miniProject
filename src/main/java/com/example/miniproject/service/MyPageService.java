@@ -3,7 +3,7 @@ package com.example.miniproject.service;
 import com.example.miniproject.dto.response.ProductsResponseDto;
 import com.example.miniproject.entity.Likes;
 import com.example.miniproject.entity.Member;
-import com.example.miniproject.entity.Post;
+import com.example.miniproject.entity.Product;
 import com.example.miniproject.repository.LikesRepository;
 import com.example.miniproject.repository.MemberRepository;
 import com.example.miniproject.repository.ProductRepository;
@@ -24,52 +24,52 @@ public class MyPageService {
     private final LikesRepository likesRepository;
 
     @Transactional(readOnly = true)
-    public List<ProductsResponseDto> readMyPosts(HttpServletRequest request) {
+    public List<ProductsResponseDto> readMyProducts(HttpServletRequest request) {
         RequestToken requestToken = new RequestToken(request); // servelet에서 토큰 가져오기
 
         Member member = memberRepository.findByUsername(requestToken.getUsername().orElseThrow(
                 () -> new IllegalArgumentException("Can not find username"))).orElseThrow();
 
-        List<Post> posts = productRepository.findAllByMember(member);
-        List<ProductsResponseDto> myPosts = new ArrayList<>();
-        for (Post post : posts) {
-            myPosts.add(ProductsResponseDto.builder()
-                    .title(post.getTitle())
-                    .nickname(post.getMember().getNickname())
-                    .imgUrl(post.getImgUrl())
-                    .size(post.getSize())
-                    .likesCnt(likesRepository.findAllByPost(post).size())
-                    .modifiedAt(post.getModifiedAt())
-                    .createdAt(post.getCreatedAt())
+        List<Product> products = productRepository.findAllByMember(member);
+        List<ProductsResponseDto> myProducts = new ArrayList<>();
+        for (Product product : products) {
+            myProducts.add(ProductsResponseDto.builder()
+                    .title(product.getTitle())
+                    .nickname(product.getMember().getNickname())
+                    .imgUrl(product.getImgUrl())
+                    .size(product.getSize())
+                    .likesCnt(likesRepository.findAllByProduct(product).size())
+                    .modifiedAt(product.getModifiedAt())
+                    .createdAt(product.getCreatedAt())
                     .build());
         }
-        return myPosts;
+        return myProducts;
     }
 
     @Transactional(readOnly = true)
-    public List<ProductsResponseDto> readMyPostsLikes(HttpServletRequest request) {
+    public List<ProductsResponseDto> readMyProductsLikes(HttpServletRequest request) {
         RequestToken requestToken = new RequestToken(request); // servelet에서 토큰 가져오기
 
         Member member = memberRepository.findByUsername(requestToken.getUsername().orElseThrow(
                 () -> new IllegalArgumentException("Can not find username"))).orElseThrow();
 
-        List<Likes> likesList = likesRepository.findAllByMemberAndPostIsNotNull(member);
-        List<Post> myPostsLikes = new ArrayList<>();
+        List<Likes> likesList = likesRepository.findAllByMemberAndProductIsNotNull(member);
+        List<Product> myProductsLikes = new ArrayList<>();
         for (Likes likes : likesList) {
-            myPostsLikes.add(likes.getPost());
+            myProductsLikes.add(likes.getProduct());
         }
-        List<ProductsResponseDto> myPostLikesDtos = new ArrayList<>();
-        for (Post post : myPostsLikes) {
-            myPostLikesDtos.add(ProductsResponseDto.builder()
-                    .title(post.getTitle())
-                    .nickname(post.getMember().getNickname())
-                    .imgUrl(post.getImgUrl())
-                    .size(post.getSize())
-                    .likesCnt(likesRepository.findAllByPost(post).size())
-                    .modifiedAt(post.getModifiedAt())
-                    .createdAt(post.getCreatedAt())
+        List<ProductsResponseDto> myProductsLikesDtos = new ArrayList<>();
+        for (Product product : myProductsLikes) {
+            myProductsLikesDtos.add(ProductsResponseDto.builder()
+                    .title(product.getTitle())
+                    .nickname(product.getMember().getNickname())
+                    .imgUrl(product.getImgUrl())
+                    .size(product.getSize())
+                    .likesCnt(likesRepository.findAllByProduct(product).size())
+                    .modifiedAt(product.getModifiedAt())
+                    .createdAt(product.getCreatedAt())
                     .build());
         }
-        return myPostLikesDtos;
+        return myProductsLikesDtos;
     }
 }

@@ -21,7 +21,7 @@ public class LikesController {
     }
 
     @PostMapping("/api/likes/{id}")
-    public void likesPost(@PathVariable Long id, HttpServletRequest request){
-    likesService.likesPost(id, getUsernameByRequest(request));
+    public void LikesProduct(@PathVariable Long id, HttpServletRequest request){
+    likesService.likesProduct(id, getUsernameByRequest(request));
     }
 }

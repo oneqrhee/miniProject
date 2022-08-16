@@ -5,7 +5,7 @@ import com.example.miniproject.dto.response.CommentResponseDto;
 import com.example.miniproject.dto.response.ProductResponseDto;
 import com.example.miniproject.dto.response.ProductsResponseDto;
 import com.example.miniproject.entity.Member;
-import com.example.miniproject.entity.Post;
+import com.example.miniproject.entity.Product;
 import com.example.miniproject.repository.LikesRepository;
 import com.example.miniproject.repository.MemberRepository;
 import com.example.miniproject.repository.ProductRepository;
@@ -40,7 +40,7 @@ public class ProductService {
         String imgUrl = s3Uploader.upload(multipartFile, "upload");
         Member member = memberRepository.findByUsername(username).orElseThrow();
 
-        Post post = Post.builder()
+        Product product = Product.builder()
                 .title(productRequestDto.getTitle())
                 .imgUrl(imgUrl)
                 .size(productRequestDto.getSize())
@@ -49,43 +49,43 @@ public class ProductService {
                 .nickname(member.getNickname())
                 .member(member)
                 .build();
-        productRepository.save(post);
+        productRepository.save(product);
         return new ResponseEntity<>("글이 등록되었습니다.", HttpStatus.CREATED);
     }
 
     @Transactional(readOnly = true)
-    public List<ProductsResponseDto> readAllPost() {
-        List<Post> posts = productRepository.findAll();
-        List<ProductsResponseDto> postList = new ArrayList<>();
-        for (Post post : posts) {
-            postList.add(ProductsResponseDto.builder()
-                    .title(post.getTitle())
-                    .size(post.getSize())
-                    .nickname(post.getNickname())
-                    .imgUrl(post.getImgUrl())
-                    .likesCnt(likesRepository.findAllByPost(post).size())
-                    .createdAt(post.getCreatedAt())
-                    .modifiedAt(post.getModifiedAt())
+    public List<ProductsResponseDto> readAllProducts() {
+        List<Product> products = productRepository.findAll();
+        List<ProductsResponseDto> productList = new ArrayList<>();
+        for (Product product : products) {
+            productList.add(ProductsResponseDto.builder()
+                    .title(product.getTitle())
+                    .size(product.getSize())
+                    .nickname(product.getNickname())
+                    .imgUrl(product.getImgUrl())
+                    .likesCnt(likesRepository.findAllByProduct(product).size())
+                    .createdAt(product.getCreatedAt())
+                    .modifiedAt(product.getModifiedAt())
                     .build());
         }
-        return postList;
+        return productList;
     }
 
     @Transactional(readOnly = true)
-    public ProductResponseDto readPost(Long productId) {
-        Post post = productRepository.findById(productId)
+    public ProductResponseDto readProduct(Long productId) {
+        Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new IllegalArgumentException("게시글이 존재하지 않습니다."));
         return ProductResponseDto.builder()
-                .title(post.getTitle())
-                .size(post.getSize())
-                .nickname(post.getNickname())
-                .price(post.getPrice())
-                .content(post.getContent())
-                .imgUrl(post.getImgUrl())
-                .likesCnt(likesRepository.findAllByPost(post).size())
-                .commentList(post.getCommentList().stream().map(CommentResponseDto::new).collect(Collectors.toList()))
-                .createdAt(post.getCreatedAt())
-                .modifiedAt(post.getModifiedAt())
+                .title(product.getTitle())
+                .size(product.getSize())
+                .nickname(product.getNickname())
+                .price(product.getPrice())
+                .content(product.getContent())
+                .imgUrl(product.getImgUrl())
+                .likesCnt(likesRepository.findAllByProduct(product).size())
+                .commentList(product.getCommentList().stream().map(CommentResponseDto::new).collect(Collectors.toList()))
+                .createdAt(product.getCreatedAt())
+                .modifiedAt(product.getModifiedAt())
                 .build();
     }
 
@@ -96,13 +96,13 @@ public class ProductService {
         Member member = memberRepository.findByUsername(requestToken.getUsername().orElseThrow(
                 () -> new IllegalArgumentException("Can not find username"))).orElseThrow();
 
-        Post post = productRepository.findById(productId)
+        Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new IllegalArgumentException("게시글이 존재하지 않습니다."));
 
-        if (!post.getNickname().equals(member.getNickname())) {
+        if (!product.getNickname().equals(member.getNickname())) {
             return new ResponseEntity<>("작성자만 수정할 수 있습니다", HttpStatus.UNAUTHORIZED);
         }
-        post.updatePost(productRequestDto);
+        product.updateProduct(productRequestDto);
 
         return new ResponseEntity<>("글이 수정되었습니다.", HttpStatus.OK);
 
@@ -115,10 +115,10 @@ public class ProductService {
         Member member = memberRepository.findByUsername(requestToken.getUsername().orElseThrow(
                 () -> new IllegalArgumentException("Can not find username"))).orElseThrow();
 
-        Post post = productRepository.findById(productId)
+        Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new IllegalArgumentException("게시글이 존재하지 않습니다."));
 
-        if (!post.getNickname().equals(member.getNickname())) {
+        if (!product.getNickname().equals(member.getNickname())) {
             return new ResponseEntity<>("작성자만 삭제할 수 있습니다", HttpStatus.UNAUTHORIZED);
         }
         productRepository.deleteById(productId);

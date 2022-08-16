@@ -17,12 +17,12 @@ public class MyPageController {
     private final MyPageService myPageService;
 
     @GetMapping("/products") // 내가쓴글 조회하기
-    public List<ProductsResponseDto> readMyPosts(HttpServletRequest request) {
-        return myPageService.readMyPosts(request);
+    public List<ProductsResponseDto> readMyProducts(HttpServletRequest request) {
+        return myPageService.readMyProducts(request);
     }
 
     @GetMapping("/likes") //내가 좋아요한 게시글 조회하기
-    public List<ProductsResponseDto> readMyPostsLikes(HttpServletRequest request) {
-        return myPageService.readMyPostsLikes(request);
+    public List<ProductsResponseDto> readMyProductsLikes(HttpServletRequest request) {
+        return myPageService.readMyProductsLikes(request);
     }
 }

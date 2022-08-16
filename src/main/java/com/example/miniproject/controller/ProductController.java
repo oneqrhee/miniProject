@@ -29,22 +29,22 @@ public class ProductController {
     }
 
     @GetMapping("/products")
-    public List<ProductsResponseDto> readAllPost() {
-        return productService.readAllPost();
+    public List<ProductsResponseDto> readAllProducts() {
+        return productService.readAllProducts();
     }
 
     @GetMapping("/product/{productId}")
-    public ProductResponseDto readPost(@PathVariable Long productId) {
-        return productService.readPost(productId);
+    public ProductResponseDto readProduct(@PathVariable Long productId) {
+        return productService.readProduct(productId);
     }
 
     @PutMapping("/product/{productId}")
-    public ResponseEntity<String> updatePost(@PathVariable Long productId, @RequestBody ProductRequestDto productRequestDto, HttpServletRequest request) {
+    public ResponseEntity<String> updateProduct(@PathVariable Long productId, @RequestBody ProductRequestDto productRequestDto, HttpServletRequest request) {
         return productService.updateProduct(productId, productRequestDto, request);
     }
 
     @DeleteMapping("/product/{productId}")
-    public ResponseEntity<String> deletePost(@PathVariable Long productId, HttpServletRequest request) {
+    public ResponseEntity<String> deleteProduct(@PathVariable Long productId, HttpServletRequest request) {
         return productService.deleteProduct(productId, request);
     }
 

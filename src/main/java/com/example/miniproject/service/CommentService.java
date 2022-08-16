@@ -4,7 +4,7 @@ import com.example.miniproject.dto.request.CommentRequestDto;
 import com.example.miniproject.dto.response.CommentResponseDto;
 import com.example.miniproject.entity.Comment;
 import com.example.miniproject.entity.Member;
-import com.example.miniproject.entity.Post;
+import com.example.miniproject.entity.Product;
 import com.example.miniproject.repository.CommentRepository;
 import com.example.miniproject.repository.MemberRepository;
 import com.example.miniproject.repository.ProductRepository;
@@ -30,7 +30,7 @@ public class CommentService {
 
 
     @Transactional
-    public CommentResponseDto createComment(Long postId, CommentRequestDto requestDto, HttpServletRequest request) {
+    public CommentResponseDto createComment(Long productId, CommentRequestDto requestDto, HttpServletRequest request) {
         // 멤버 유효성 검사
         RequestToken requestToken = new RequestToken(request); // servelet에서 토큰 가져오기
 
@@ -38,13 +38,13 @@ public class CommentService {
                 () -> new IllegalArgumentException("Can not find username"))).orElseThrow();
 
         //포스트 id 검사
-        Post post = productRepository.findById(postId).orElseThrow(
-                () -> new IllegalArgumentException("post id is not exist"));
+        Product product = productRepository.findById(productId).orElseThrow(
+                () -> new IllegalArgumentException("product id is not exist"));
 
         Comment comment = Comment.builder()
                 .member(member)
                 .nickname(member.getNickname())
-                .post(post)
+                .product(product)
                 .content(requestDto.getContent())
                 .build();
 
@@ -61,11 +61,11 @@ public class CommentService {
 
     public CommentResponseDto getAllComments(Long id) {
         // 포스트 id 검사
-        Post post = productRepository.findById(id).orElseThrow(
-                () -> new IllegalArgumentException("post id is not exist"));
+        Product product = productRepository.findById(id).orElseThrow(
+                () -> new IllegalArgumentException("product id is not exist"));
 
 
-        List<Comment> commentList = commentRepository.findAllByPost(post);
+        List<Comment> commentList = commentRepository.findAllByProduct(product);
         List<CommentResponseDto> commentResponseDtoList = new ArrayList<>();
 
         for (Comment comment : commentList){

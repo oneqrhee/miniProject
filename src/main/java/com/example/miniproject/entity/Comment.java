@@ -36,7 +36,7 @@ public class Comment extends Timestamped{
     @ManyToOne
     @JoinColumn
     @OnDelete(action = OnDeleteAction.CASCADE)
-    private Post post;
+    private Product product;
 
     public void update(CommentRequestDto requestDto){
         this.content = requestDto.getContent();

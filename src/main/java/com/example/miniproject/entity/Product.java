@@ -7,7 +7,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -16,7 +15,7 @@ import java.util.List;
 @Entity
 @Getter
 @NoArgsConstructor
-public class Post extends Timestamped{
+public class Product extends Timestamped{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -47,11 +46,11 @@ public class Post extends Timestamped{
     @JoinColumn(nullable = false)
     private Member member;
 
-    @OneToMany(mappedBy = "post")
+    @OneToMany(mappedBy = "product")
     private List<Comment> commentList;
 
 
-    public void updatePost(ProductRequestDto productRequestDto){
+    public void updateProduct(ProductRequestDto productRequestDto){
         this.title = productRequestDto.getTitle();
         this.size = productRequestDto.getSize();
         this.price = productRequestDto.getPrice();

@@ -2,7 +2,7 @@ package com.example.miniproject.service;
 
 import com.example.miniproject.entity.Likes;
 import com.example.miniproject.entity.Member;
-import com.example.miniproject.entity.Post;
+import com.example.miniproject.entity.Product;
 import com.example.miniproject.repository.LikesRepository;
 import com.example.miniproject.repository.MemberRepository;
 import com.example.miniproject.repository.ProductRepository;
@@ -22,21 +22,21 @@ public class LikesService {
     private final ProductRepository productRepository;
 
     @Transactional
-    public void likesPost(Long id, String username) {
+    public void likesProduct(Long id, String username) {
 
         Member member = memberRepository.findByUsername(username).orElseThrow();
         //멤버 유효성 검사
 
         //포스트 id 검사
-        Post post = productRepository.findById(id).orElseThrow(
+        Product product = productRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException("게시글이 존재하지 않습니다."));
 
-        Likes likes = isPresentLikes(member, post);
+        Likes likes = isPresentLikes(member, product);
         if (null == likes){
             likesRepository.save(
                     Likes.builder()
                             .member(member)
-                            .post(post)
+                            .product(product)
                             .build()
             );
         } else{
@@ -45,8 +45,8 @@ public class LikesService {
     }
 
     @Transactional
-    public Likes isPresentLikes(Member member, Post post){
-        Optional<Likes> optionalLikes = likesRepository.findByMemberAndPost(member, post);
+    public Likes isPresentLikes(Member member, Product product){
+        Optional<Likes> optionalLikes = likesRepository.findByMemberAndProduct(member, product);
         return optionalLikes.orElse(null);
     }
 }

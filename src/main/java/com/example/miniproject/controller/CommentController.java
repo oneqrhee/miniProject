@@ -14,9 +14,9 @@ public class CommentController {
 
     private final CommentService commentService;
 
-    @PostMapping("/api/comments/{postId}")
-    public CommentResponseDto createComment(@PathVariable Long postId, @RequestBody CommentRequestDto requestDto, HttpServletRequest request){
-        return commentService.createComment(postId, requestDto, request);
+    @PostMapping("/api/comments/{productId}")
+    public CommentResponseDto createComment(@PathVariable Long productId, @RequestBody CommentRequestDto requestDto, HttpServletRequest request){
+        return commentService.createComment(productId, requestDto, request);
     }
 
     @GetMapping("/api/comments/{id}")
