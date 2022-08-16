@@ -26,7 +26,7 @@ public class MemberController {
         return memberService.signup(requestDto);
     }
 
-    @PostMapping("checkId")
+    @PostMapping("/checkId")
     public ResponseDto<String> checkId(@RequestBody MemberRequestDto requestDto){
         return memberService.checkId(requestDto);
     }
@@ -35,10 +35,5 @@ public class MemberController {
     public ResponseDto<String> login(HttpServletResponse response, @RequestBody LoginRequestDto dto){
 
         return memberService.login(response, dto);
-
     }
-
-
-
-
 }

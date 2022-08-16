@@ -8,5 +8,4 @@ public class ProductRequestDto {
     private int size;
     private int price;
     private String content;
-    private String nickname;
 }
