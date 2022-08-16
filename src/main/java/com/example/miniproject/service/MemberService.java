@@ -1,22 +1,21 @@
 package com.example.miniproject.service;
 
-import com.example.miniproject.config.auth.PrincipalDetailsService;
-import com.example.miniproject.config.jwt.token.ResponseToken;
 import com.example.miniproject.dto.request.LoginRequestDto;
 import com.example.miniproject.dto.request.MemberRequestDto;
 import com.example.miniproject.dto.response.ResponseDto;
 import com.example.miniproject.entity.Member;
 import com.example.miniproject.exception.ExceptionNamingHandler;
 import com.example.miniproject.repository.MemberRepository;
+import com.example.miniproject.security.config.auth.PrincipalDetailsService;
+import com.example.miniproject.security.config.jwt.token.ResponseToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestBody;
 
-
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -34,21 +33,21 @@ public class MemberService {
 
     private PrincipalDetailsService principalDetailsService;
 
-    @Transactional(readOnly = true)
     public ResponseDto<String> checkId(MemberRequestDto dto) {
         if (memberRepository.findByUsername(dto.getUsername()).isPresent()) {
-            throw new IllegalArgumentException("이미 사용중인 아이디입니다");
+            return new ResponseDto<>(HttpStatus.OK, "이미 가입된 Id입니다.");
 
         }
-        return new ResponseDto<>(HttpStatus.OK, "사용할 수 있는 아이디입니다.");
+
+        return new ResponseDto<>(HttpStatus.OK, "사용가능한 Id 입니다.");
     }
 
-    @Transactional(readOnly = true)
     public ResponseDto<String> checkNick(MemberRequestDto dto) {
-        if (memberRepository.findByUsername(dto.getNickname()).isPresent()) {
-            throw new IllegalArgumentException("이미 사용중인 닉네임입니다");
+        if (memberRepository.findByNickname(dto.getNickname()).isPresent()) {
+            return new ResponseDto<>(HttpStatus.OK, "사용중인 닉네임입니다.");
         }
-        return new ResponseDto<>(HttpStatus.OK, "사용할 수 있는 닉네임입니다.");
+
+        return new ResponseDto<>(HttpStatus.OK, "사용가능한 닉네임입니다.");
     }
 
     @Transactional
@@ -57,6 +56,11 @@ public class MemberService {
         if (memberRepository.findByUsername(dto.getUsername()).isPresent()) {
             throw new IllegalArgumentException("이미 사용중인 ID입니다");
         }
+        if (memberRepository.findByNickname(dto.getNickname()).isPresent()) {
+            throw new IllegalArgumentException("이미 사용중인 닉네임입니다");
+        }
+
+
         if (checkUsernameAndPassword(dto.getUsername(), dto.getPassword(), dto.getNickname())) {
             memberRepository.save(Member.builder()
                     .username(dto.getUsername())
@@ -73,17 +77,20 @@ public class MemberService {
     private boolean findStr(String regex, String str) {
         Pattern pattern = Pattern.compile(regex);
         Matcher m = pattern.matcher(str);
-        return !m.find();
+        return m.find();
     }
 
     private boolean checkUsernameAndPassword(String username, String password, String nickname) {
-        if (!(username.length() >= 4 && username.length() <= 12 && findStr("[^a-zA-Z0-9]", username))) // a~z, A~Z, 0~9 문자가 이외가 포함되면 false를 출력
+        if (!(username.length() >= 4 && username.length() <= 12 && !findStr("[^a-zA-Z0-9]", username)))
+            // a~z, A~Z, 0~9 문자가 이외가 포함되면 false를 출력
             throw new IllegalArgumentException(ExceptionNamingHandler.USERNAME_ERROR);
 
-        if (!(password.length() >= 4 && password.length() <= 32 && findStr("[^a-z0-9]", password))) // a~z, 0~9 문자가 이외가 포함되면 false를 출력
+        if (!(password.length() >= 4 && password.length() <= 32 && !findStr("[^a-z0-9]", password)))
+            // a~z, 0~9 문자가 이외가 포함되면 false를 출력
             throw new IllegalArgumentException(ExceptionNamingHandler.PASSWORD_ERROR);
 
-        if (!(nickname.length() >= 2 && nickname.length() <= 8 && findStr("[^가-힣a-zA-Z0-9]", nickname))) // a~z, 0~9 문자가 이외가 포함되면 false를 출력
+        if (!(nickname.length() >= 2 && nickname.length() <= 8 && !findStr("[^가-힣a-zA-Z0-9]", nickname)))
+            // a~z, 0~9 문자가 이외가 포함되면 false를 출력
             throw new IllegalArgumentException(ExceptionNamingHandler.NICKNAME_ERROR);
 
         return true;

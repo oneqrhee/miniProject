@@ -1,6 +1,6 @@
 package com.example.miniproject.controller;
 
-import com.example.miniproject.config.jwt.token.RequestToken;
+import com.example.miniproject.security.config.jwt.token.RequestToken;
 import com.example.miniproject.service.LikesService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PathVariable;

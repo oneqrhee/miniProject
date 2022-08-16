@@ -1,4 +1,4 @@
-package com.example.miniproject.config.jwt.token.properties;
+package com.example.miniproject.security.config.jwt.token.properties;
 
 public interface CommonTokenProperties {
 

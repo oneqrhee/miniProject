@@ -1,4 +1,4 @@
-package com.example.miniproject.config;
+package com.example.miniproject.security;
 
 
 import org.springframework.context.annotation.Bean;

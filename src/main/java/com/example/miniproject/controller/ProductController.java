@@ -1,19 +1,18 @@
 package com.example.miniproject.controller;
 
-import com.example.miniproject.config.jwt.token.RequestToken;
+
 import com.example.miniproject.dto.request.ProductRequestDto;
 import com.example.miniproject.dto.response.ProductResponseDto;
-import com.example.miniproject.entity.Member;
-import com.example.miniproject.repository.MemberRepository;
-import com.example.miniproject.service.ProductService;
 import com.example.miniproject.dto.response.ProductsResponseDto;
+import com.example.miniproject.security.config.jwt.token.RequestToken;
+import com.example.miniproject.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.util.List;
 
 @RestController

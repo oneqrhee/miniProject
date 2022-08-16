@@ -1,47 +1,48 @@
-#
-#spring:
-#  servlet: # max file size
-#    multipart:
-#      max-file-size: 50MB
-#      max-request-size: 50MB
-#  mvc:
-#    path match:
-#      matching-strategy: ant_path_matcher # Spring boot 2.6 이후부터  spring.mvc.pathmatch.matching-strategy 값이 ant_path_matcher에서 path_pattern_parser로 변경
-#  main:
-#    allow-circular-references: true
-#  datasource:
-#      driver-class-name: com.mysql.cj.jdbc.Driver
-#    url: jdbc:mysql://localhost:3306/board?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
-#    username: root
-#    password: 1234
-#
-#  jpa:
-#    hibernate:
-#      ddl-auto: create #create update none
-#      naming:
-#        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
-#    show-sql: true
-#    generate-ddl: true # ddl-auto 속성을 사용할지 말지
-#    properties:
-#      hibernate:
-#        default_batch_fetch_size: 1000
-#
-#
-#logging:
-#  level:
-#    '[org.apache.coyote.http11]': DEBUG
-#    org.hibernate.SQL: debug
-#    org.hibernate.type: trace
-#
-#
-#cloud:
-#  aws:
-#    credentials:
-#      accessKey: AKIARE5TNUV55SNW5HPQ
-#      secretKey: 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
-#    s3:
-#      bucket: cheoljunvucket
-#    region:
-#      static: ap-northeast-2
-#    stack:
-#      auto: false
+
+spring:
+  servlet: # max file size
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 50MB
+  mvc:
+    path match:
+      matching-strategy: ant_path_matcher # Spring boot 2.6 이후부터  spring.mvc.pathmatch.matching-strategy 값이 ant_path_matcher에서 path_pattern_parser로 변경
+  main:
+    allow-circular-references: true
+  datasource:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://localhost:3306/board?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+      username: root
+      password: 1234
+
+  jpa:
+    hibernate:
+      ddl-auto: create #create update none
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    show-sql: true
+    generate-ddl: true # ddl-auto 속성을 사용할지 말지
+    properties:
+      hibernate:
+        default_batch_fetch_size: 1000
+
+
+logging:
+  level:
+    '[org.apache.coyote.http11]': DEBUG
+    org.hibernate.SQL: debug
+    org.hibernate.type: trace
+
+
+cloud:
+  aws:
+    credentials:
+      accessKey: AKIARE5TNUV55SNW5HPQ
+      secretKey: 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
+    s3:
+      bucket: cheoljunvucket
+    region:
+      static: ap-northeast-2
+    stack:
+      auto: false
+

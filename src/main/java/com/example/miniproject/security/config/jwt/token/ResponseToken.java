@@ -1,11 +1,11 @@
-package com.example.miniproject.config.jwt.token;
+package com.example.miniproject.security.config.jwt.token;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.example.miniproject.config.auth.PrincipalDetails;
-import com.example.miniproject.config.jwt.token.properties.AccessTokenProperties;
-import com.example.miniproject.config.jwt.token.properties.CommonTokenProperties;
 import com.example.miniproject.entity.Member;
+import com.example.miniproject.security.config.auth.PrincipalDetails;
+import com.example.miniproject.security.config.jwt.token.properties.AccessTokenProperties;
+import com.example.miniproject.security.config.jwt.token.properties.CommonTokenProperties;
 import lombok.Getter;
 
 import java.util.Date;

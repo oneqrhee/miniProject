@@ -1,4 +1,4 @@
-package com.example.miniproject.config.auth;
+package com.example.miniproject.security.config.auth;
 
 import com.example.miniproject.entity.Member;
 import lombok.AllArgsConstructor;
