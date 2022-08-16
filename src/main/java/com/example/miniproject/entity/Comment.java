@@ -42,7 +42,7 @@ public class Comment extends Timestamped{
         this.content = requestDto.getContent();
     }
 
-//    public boolean validateMember(Member member) {
-//        return !this.member.equals(member);
-//    }
+    public boolean validateMember(Member member) {
+        return !this.member.equals(member);
+    }
 }

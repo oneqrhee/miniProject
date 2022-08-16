@@ -30,7 +30,7 @@ public class CommentService {
 
 
     @Transactional
-    public CommentResponseDto createComment(Long post_id, CommentRequestDto requestDto, HttpServletRequest request) {
+    public CommentResponseDto createComment(Long postId, CommentRequestDto requestDto, HttpServletRequest request) {
         // 멤버 유효성 검사
         RequestToken requestToken = new RequestToken(request); // servelet에서 토큰 가져오기
 
@@ -38,7 +38,7 @@ public class CommentService {
                 () -> new IllegalArgumentException("Can not find username"))).orElseThrow();
 
         //포스트 id 검사
-        Post post = productRepository.findById(post_id).orElseThrow(
+        Post post = productRepository.findById(postId).orElseThrow(
                 () -> new IllegalArgumentException("post id is not exist"));
 
         Comment comment = Comment.builder()
@@ -81,7 +81,7 @@ public class CommentService {
         return (CommentResponseDto) commentResponseDtoList;
     }
 
-    public CommentResponseDto updateComment(Long id, CommentRequestDto requestDto,
+    public CommentResponseDto updateComment(Long commentId, CommentRequestDto requestDto,
                                             HttpServletRequest request) {
         //멤버 유효성 검사
         RequestToken requestToken = new RequestToken(request); // servelet에서 토큰 가져오기
@@ -90,15 +90,15 @@ public class CommentService {
                 () -> new IllegalArgumentException("Can not find username"))).orElseThrow();
 
         //댓글 id 검사
-        Comment comment = isPresentComment(id);
+        Comment comment = isPresentComment(commentId);
         if (null == comment){
             throw new IllegalArgumentException("comment id is not exist");
         }
 
-//        //댓글 멤버 유효성 검사
-//        if (comment.validateMember(member)){
-//            throw new IllegalArgumentException("only author can update");
-//        }
+        //댓글 멤버 유효성 검사
+        if (comment.validateMember(member)){
+            throw new IllegalArgumentException("only author can update");
+        }
 
         comment.update(requestDto);
 
@@ -112,7 +112,7 @@ public class CommentService {
 
     }
 
-    public void deleteComment(Long id, HttpServletRequest request) {
+    public void deleteComment(Long commentId, HttpServletRequest request) {
         //멤버 유효성 검사
         RequestToken requestToken = new RequestToken(request); // servelet에서 토큰 가져오기
 
@@ -120,15 +120,15 @@ public class CommentService {
                 () -> new IllegalArgumentException("Can not find username"))).orElseThrow();
 
         //댓글 id 검사
-        Comment comment = isPresentComment(id);
+        Comment comment = isPresentComment(commentId);
         if (null == comment){
             throw new IllegalArgumentException("comment id is not exist");
         }
 
-//        //댓글 멤버 유효성 검사
-//        if (comment.validateMember(member)){
-//            throw new IllegalArgumentException("only author can update");
-//        }
+        //댓글 멤버 유효성 검사
+        if (comment.validateMember(member)){
+            throw new IllegalArgumentException("only author can update");
+        }
 
         commentRepository.delete(comment);
     }
@@ -138,6 +138,4 @@ public class CommentService {
         Optional<Comment> optionalComment = commentRepository.findById(id);
         return optionalComment.orElse(null);
     }
-
-
 }

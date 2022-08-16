@@ -14,24 +14,24 @@ public class CommentController {
 
     private final CommentService commentService;
 
-    @PostMapping("/api/comment/{id}")
-    public CommentResponseDto createComment(@PathVariable Long id, @RequestBody CommentRequestDto requestDto, HttpServletRequest request){
-        return commentService.createComment(id, requestDto, request);
+    @PostMapping("/api/comments/{postId}")
+    public CommentResponseDto createComment(@PathVariable Long postId, @RequestBody CommentRequestDto requestDto, HttpServletRequest request){
+        return commentService.createComment(postId, requestDto, request);
     }
 
-    @GetMapping("/api/comment/{id}")
+    @GetMapping("/api/comments/{id}")
     public CommentResponseDto getAllComments(@PathVariable Long id){
         return commentService.getAllComments(id);
     }
 
-    @PutMapping("/api/comment/{id}")
-    public CommentResponseDto updateComment(@PathVariable Long id, @RequestBody CommentRequestDto requestDto,
+    @PutMapping("/api/comments/{commentId}")
+    public CommentResponseDto updateComment(@PathVariable Long commentId, @RequestBody CommentRequestDto requestDto,
                                             HttpServletRequest request ){
-        return commentService.updateComment(id, requestDto, request);
+        return commentService.updateComment(commentId, requestDto, request);
     }
 
-    @DeleteMapping("/api/comment/{id}")
-    public void deleteComment(@PathVariable Long id, HttpServletRequest request){
-         commentService.deleteComment(id, request);
+    @DeleteMapping("/api/comments/{commentId}")
+    public void deleteComment(@PathVariable Long commentId, HttpServletRequest request){
+         commentService.deleteComment(commentId, request);
     }
 }
