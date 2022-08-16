@@ -8,6 +8,7 @@ import com.example.miniproject.repository.MemberRepository;
 import com.example.miniproject.service.ProductService;
 import com.example.miniproject.dto.response.ProductsResponseDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -23,9 +24,9 @@ public class ProductController {
 
 
     @PostMapping("/products")
-    public void createProduct(@RequestPart MultipartFile multipartFile, @RequestPart ProductRequestDto productRequestDto,
-                              HttpServletRequest request) throws IOException {
-        productService.createProduct(multipartFile, productRequestDto, getUsernameByRequest(request));
+    public ResponseEntity<String> createProduct(@RequestPart MultipartFile multipartFile, @RequestPart ProductRequestDto productRequestDto,
+                                        HttpServletRequest request) throws IOException {
+        return productService.createProduct(multipartFile, productRequestDto, getUsernameByRequest(request));
     }
 
     @GetMapping("/products")
@@ -39,13 +40,13 @@ public class ProductController {
     }
 
     @PutMapping("/products/{productId}")
-    public void updatePost(@PathVariable Long productId, @RequestBody ProductRequestDto productRequestDto) {
-        productService.updateProduct(productId, productRequestDto);
+    public ResponseEntity<String> updatePost(@PathVariable Long productId, @RequestBody ProductRequestDto productRequestDto, HttpServletRequest request) {
+        return productService.updateProduct(productId, productRequestDto, request);
     }
 
     @DeleteMapping("/products/{productId}")
-    public void deletePost(@PathVariable Long productId) {
-        productService.deleteProduct(productId);
+    public ResponseEntity<String> deletePost(@PathVariable Long productId, HttpServletRequest request) {
+        return productService.deleteProduct(productId, request);
     }
 
 
