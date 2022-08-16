@@ -41,4 +41,8 @@ public class Comment extends Timestamped{
     public void update(CommentRequestDto requestDto){
         this.content = requestDto.getContent();
     }
+
+//    public boolean validateMember(Member member) {
+//        return !this.member.equals(member);
+//    }
 }
