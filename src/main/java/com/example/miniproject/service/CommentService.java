@@ -1,6 +1,5 @@
 package com.example.miniproject.service;
 
-import com.example.miniproject.config.jwt.token.RequestToken;
 import com.example.miniproject.dto.request.CommentRequestDto;
 import com.example.miniproject.dto.response.CommentResponseDto;
 import com.example.miniproject.entity.Comment;
@@ -9,6 +8,7 @@ import com.example.miniproject.entity.Post;
 import com.example.miniproject.repository.CommentRepository;
 import com.example.miniproject.repository.MemberRepository;
 import com.example.miniproject.repository.ProductRepository;
+import com.example.miniproject.security.config.jwt.token.RequestToken;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

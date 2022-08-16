@@ -1,9 +1,9 @@
-package com.example.miniproject.config.jwt;
+package com.example.miniproject.security.config.jwt;
 
-import com.example.miniproject.config.jwt.token.RequestToken;
-import com.example.miniproject.config.jwt.token.properties.AccessTokenProperties;
-import com.example.miniproject.config.jwt.token.properties.CommonTokenProperties;
 import com.example.miniproject.repository.MemberRepository;
+import com.example.miniproject.security.config.jwt.token.RequestToken;
+import com.example.miniproject.security.config.jwt.token.properties.AccessTokenProperties;
+import com.example.miniproject.security.config.jwt.token.properties.CommonTokenProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.web.AuthenticationEntryPoint;
@@ -17,12 +17,11 @@ import java.io.IOException;
 
 
 public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
-    @Autowired
+
     private MemberRepository memberRepository;
 
-    public JwtAuthorizationFilter(AuthenticationManager authenticationManager, MemberRepository memberRepository) {
+    public JwtAuthorizationFilter(AuthenticationManager authenticationManager) {
         super(authenticationManager);
-        this.memberRepository = memberRepository;
     }
 
     public JwtAuthorizationFilter(AuthenticationManager authenticationManager, AuthenticationEntryPoint authenticationEntryPoint) {
@@ -34,14 +33,16 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 
 
         String jwtHeader = request.getHeader(AccessTokenProperties.HEADER_STRING);
+        String bearerToken = jwtHeader.substring("Bearer ".length());
 
         // JWT Token 을 검증하여 정상적인 사용자인지 확인해봐야함
-        if (jwtHeader == null || !jwtHeader.startsWith(CommonTokenProperties.TOKEN_PREFIX)) { // 헤더가 없거나 Bearer 이 아닌 경우
+        if (bearerToken == null || !bearerToken.startsWith(CommonTokenProperties.TOKEN_PREFIX)) { // 헤더가 없거나 Bearer 이 아닌 경우
             chain.doFilter(request, response);
             return;
         }
 
-        RequestToken requestToken = new RequestToken(request);
+
+
 
         chain.doFilter(request, response);
 

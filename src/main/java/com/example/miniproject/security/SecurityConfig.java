@@ -1,9 +1,8 @@
-package com.example.miniproject.config;
+package com.example.miniproject.security;
 
 
-import com.example.miniproject.config.jwt.JwtAuthenticationFilter;
-import com.example.miniproject.config.jwt.JwtAuthorizationFilter;
 import com.example.miniproject.repository.MemberRepository;
+import com.example.miniproject.security.config.jwt.JwtAuthorizationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -40,19 +39,17 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        return http
-                .csrf().disable() //Csrf 토큰요청 기능 OFF( JWT나 OAuth2 사용시 불필요)
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)//RestApi 이므로 Statless, 세션 사용안함.
-                .and()
-                .apply(new MyCustomDsl())
-                .and()
+        http
+
                 .formLogin().disable()
                 .httpBasic().disable()
-                .authorizeRequests()
-                .anyRequest()
-                .permitAll()
-                .and()
-                .build();
+                .csrf().disable() //Csrf 토큰요청 기능 OFF( JWT나 OAuth2 사용시 불필요)
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);//RestApi 이므로 Statless, 세션 사용안함.
+
+
+
+
+        return http.build();
     }
 
     public class MyCustomDsl extends AbstractHttpConfigurer<MyCustomDsl, HttpSecurity> {
@@ -61,8 +58,11 @@ public class SecurityConfig {
             AuthenticationManager authenticationManager = http.getSharedObject(AuthenticationManager.class);
             http
                     .addFilter(config.corsFilter())
-                    .addFilter(new JwtAuthenticationFilter(authenticationManager))
-                    .addFilter(new JwtAuthorizationFilter(authenticationManager, memberRepository));
+                    .addFilter(new JwtAuthorizationFilter(authenticationManager))
+
+                    .authorizeRequests()
+                    .antMatchers("/api/member/**", "/api/products/**").permitAll()
+                    .anyRequest().authenticated();
 
 
         }
