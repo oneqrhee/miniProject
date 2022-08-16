@@ -38,13 +38,16 @@ public class MemberController {
         return memberService.checkId(requestDto);
     }
 
+    @PostMapping("/checkNickname")
+    public ResponseDto<String> checkNick(@RequestBody MemberRequestDto requestDto){
+        return memberService.checkNick(requestDto);
+    }
+
     @PostMapping("/login")
     public ResponseDto<String> login(HttpServletResponse response, @RequestBody LoginRequestDto dto){
         String accessToken = memberService.login(dto);
         response.setHeader("Authorization","Bearer " + accessToken);
 
         return new ResponseDto<>(HttpStatus.OK,"로그인 성공");
-
     }
-
 }
