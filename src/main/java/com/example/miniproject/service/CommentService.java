@@ -87,20 +87,25 @@ public class CommentService {
                                             HttpServletRequest request) {
         //멤버 유효성 검사
         RequestToken requestToken = new RequestToken(request); // servelet에서 토큰 가져오기
-        requestToken.getUsername().orElseThrow(
-                () -> new IllegalArgumentException("Can not find username"));
+
+        Member member = memberRepository.findByUsername(requestToken.getUsername().orElseThrow(
+                () -> new IllegalArgumentException("Can not find username"))).orElseThrow();
 
         //포스트 id 검사
         Product product = productRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException("게시글이 존재하지 않습니다.")
         );
 
+        //댓글 id 검사
         Comment comment = isPresentComment(id);
         if (null == comment){
             throw new IllegalArgumentException("존재하지 않은 댓글입니다.");
         }
 
         //댓글 멤버 유효성 검사
+        if (comment.validateMember(member)){
+             throw new IllegalArgumentException("댓글을 작성한 사용자가 아닙니다.");
+        }
 
         comment.update(requestDto);
 
@@ -115,20 +120,25 @@ public class CommentService {
     }
 
     public void deleteComment(Long id, HttpServletRequest request) {
-        RequestToken requestToken = new RequestToken(request); // servelet에서 토큰 가져오기
-        requestToken.getUsername().orElseThrow(
-                () -> new IllegalArgumentException("Can not find username"));
-
         //멤버 유효성 검사
+        RequestToken requestToken = new RequestToken(request); // servelet에서 토큰 가져오기
 
+        Member member = memberRepository.findByUsername(requestToken.getUsername().orElseThrow(
+                () -> new IllegalArgumentException("Can not find username"))).orElseThrow();
+
+        //댓글 id 검사
         Comment comment = isPresentComment(id);
         if (null == comment){
             throw new IllegalArgumentException("존재하지 않은 댓글입니다.");
         }
 
         //댓글 멤버 유효성 검사
+        if (comment.validateMember(member)){
+            throw new IllegalArgumentException("댓글을 작성한 사용자가 아닙니다.");
+        }
 
         commentRepository.delete(comment);
+        System.out.println("댓글이 삭제되었습니다.");
     }
 
 

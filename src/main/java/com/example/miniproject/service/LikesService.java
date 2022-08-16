@@ -41,14 +41,13 @@ public class LikesService {
         if (null == likes){
             likesRepository.save(
                     Likes.builder()
-//                            .member(member)
+                            .member(member)
                             .product(product)
                             .build()
-            );
+            );  System.out.println("좋아요 추가!");
         } else{
             likesRepository.delete(likes);
-        }
-
+        }       System.out.println("좋아요 삭제!");
     }
 
     @Transactional

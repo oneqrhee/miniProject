@@ -62,7 +62,7 @@ public class Product extends Timestamped{
     @OneToMany(mappedBy = "product")
     private List<Likes> likesList;
 
-    public void updatePost(ProductRequestDto productRequestDto){
+    public void updateProduct(ProductRequestDto productRequestDto){
         this.title = productRequestDto.getTitle();
         this.size = productRequestDto.getSize();
         this.price = productRequestDto.getPrice();
