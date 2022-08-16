@@ -43,12 +43,6 @@ public class Post extends Timestamped{
     @Column
     private String nickname;
 
-    @Column
-    private LocalDateTime createdAt;
-
-    @Column
-    private LocalDateTime modifiedAt;
-
     @ManyToOne
     @JoinColumn(nullable = false)
     private Member member;

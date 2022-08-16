@@ -50,8 +50,6 @@ public class ProductService {
                 .content(productRequestDto.getContent())
                 .nickname(member.getNickname())
                 .member(member)
-                .createdAt(LocalDateTime.now())
-                .modifiedAt(LocalDateTime.now())
                 .build();
         productRepository.save(post);
         return new ResponseEntity<>("글이 등록되었습니다.", HttpStatus.CREATED);
