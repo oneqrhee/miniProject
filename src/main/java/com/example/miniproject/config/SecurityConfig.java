@@ -44,14 +44,19 @@ public class SecurityConfig {
                 .csrf().disable() //Csrf 토큰요청 기능 OFF( JWT나 OAuth2 사용시 불필요)
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)//RestApi 이므로 Statless, 세션 사용안함.
                 .and()
+                .authorizeHttpRequests()
+                .antMatchers("/api/products/**").permitAll()
+                .antMatchers("/api/member/**").permitAll()
+                .anyRequest().authenticated()
+                .and()
                 .apply(new MyCustomDsl())
                 .and()
                 .formLogin().disable()
                 .httpBasic().disable()
-                .authorizeRequests()
-                .anyRequest()
-                .permitAll()
-                .and()
+//                .authorizeRequests()
+//                .anyRequest()
+//                .permitAll()
+//                .and()
                 .build();
     }
 

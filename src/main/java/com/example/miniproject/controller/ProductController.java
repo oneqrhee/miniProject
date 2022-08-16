@@ -23,7 +23,7 @@ public class ProductController {
     private final ProductService productService;
 
 
-    @PostMapping("/products")
+    @PostMapping("/product")
     public ResponseEntity<String> createProduct(@RequestPart MultipartFile multipartFile, @RequestPart ProductRequestDto productRequestDto,
                                         HttpServletRequest request) throws IOException {
         return productService.createProduct(multipartFile, productRequestDto, getUsernameByRequest(request));
@@ -34,21 +34,20 @@ public class ProductController {
         return productService.readAllPost();
     }
 
-    @GetMapping("/products/{productId}")
+    @GetMapping("/product/{productId}")
     public ProductResponseDto readPost(@PathVariable Long productId) {
         return productService.readPost(productId);
     }
 
-    @PutMapping("/products/{productId}")
+    @PutMapping("/product/{productId}")
     public ResponseEntity<String> updatePost(@PathVariable Long productId, @RequestBody ProductRequestDto productRequestDto, HttpServletRequest request) {
         return productService.updateProduct(productId, productRequestDto, request);
     }
 
-    @DeleteMapping("/products/{productId}")
+    @DeleteMapping("/product/{productId}")
     public ResponseEntity<String> deletePost(@PathVariable Long productId, HttpServletRequest request) {
         return productService.deleteProduct(productId, request);
     }
-
 
     private String getUsernameByRequest(HttpServletRequest request) {
         RequestToken requestToken = new RequestToken(request);
