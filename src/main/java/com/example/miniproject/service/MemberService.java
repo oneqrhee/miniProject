@@ -37,7 +37,7 @@ public class MemberService {
     @Autowired
     private MemberRepository memberRepository;
 
-    private AuthenticationManager authenticationManager;
+
 
     private PrincipalDetailsService principalDetailsService;
 
@@ -94,28 +94,14 @@ public class MemberService {
     }
 
 
-    public ResponseDto<String> login(HttpServletResponse response, @RequestBody LoginRequestDto dto) {
-        UserDetails principal = principalDetailsService.loadUserByUsername(dto.getUsername());
-        String encoded = passwordEncoder.encode(dto.getPassword());
+    public String login( @RequestBody LoginRequestDto dto) {
         Member member = memberRepository.findByUsername(dto.getUsername()).orElseThrow();
-        if (!(Objects.equals(encoded, member.getPassword()))) {
+        if (passwordEncoder.matches(member.getPassword(),dto.getPassword())) {
             throw new IllegalArgumentException("회원정보가 일치하지 않습니다.");
         }
 
-
-        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
-                member.getUsername(), encoded);
-        Authentication authentication = authenticationManager.authenticate(token);
-        PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
-        ResponseToken responseToken = new ResponseToken(principalDetails);
-        response.setHeader("Authorization","Bearer " + responseToken);
-
-        return new ResponseDto<>(HttpStatus.OK,"로그인 완료");
-    }
-
-
-    public void setAuthenticationManager(AuthenticationManager authenticationManager) {
-        this.authenticationManager = authenticationManager;
+        ResponseToken responseToken = new ResponseToken(member.getUsername());
+        return responseToken.getAccessToken();
     }
 }
 
