@@ -1,4 +1,3 @@
-
 spring:
   servlet: # max file size
     multipart:
@@ -10,10 +9,12 @@ spring:
   main:
     allow-circular-references: true
   datasource:
-      driver-class-name: com.mysql.cj.jdbc.Driver
-      url: jdbc:mysql://localhost:3306/board?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
-      username: root
-      password: 1234
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/board?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: root
+    password: 1234
+  jwt:
+
 
   jpa:
     hibernate:
@@ -27,10 +28,10 @@ spring:
         default_batch_fetch_size: 1000
 
 
-logging:
-  level:
-    '[org.apache.coyote.http11]': DEBUG
-    org.hibernate.SQL: debug
+#logging:
+#  level:
+#    '[org.apache.coyote.http11]': DEBUG
+#    org.hibernate.SQL: debug
 
 
 cloud:
@@ -44,4 +45,7 @@ cloud:
       static: ap-northeast-2
     stack:
       auto: false
+
+
+
 

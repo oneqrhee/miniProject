@@ -1,8 +1,9 @@
 package com.example.miniproject.controller;
 
-import com.example.miniproject.security.config.jwt.token.RequestToken;
+import com.example.miniproject.securitytest.config.JwtTokenUtil;
 import com.example.miniproject.service.LikesService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,9 +16,14 @@ public class LikesController {
 
     private final LikesService likesService;
 
+    @Autowired
+    private JwtTokenUtil jwtTokenUtil;
+
     private String getUsernameByRequest(HttpServletRequest request){
-        RequestToken requestToken = new RequestToken(request);
-        return requestToken.getUsername().orElseThrow();
+        String requestTokenHeader = request.getHeader("Authorization");
+        String jwtToken = requestTokenHeader.substring(7);
+        String username = jwtTokenUtil.getUsernameFromToken(jwtToken);
+        return username;
     }
 
     @PostMapping("/api/likes/{id}")

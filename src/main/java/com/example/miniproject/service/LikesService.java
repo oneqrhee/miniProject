@@ -1,11 +1,11 @@
 package com.example.miniproject.service;
 
 import com.example.miniproject.entity.Likes;
-import com.example.miniproject.entity.Member;
 import com.example.miniproject.entity.Product;
 import com.example.miniproject.repository.LikesRepository;
-import com.example.miniproject.repository.MemberRepository;
 import com.example.miniproject.repository.ProductRepository;
+import com.example.miniproject.entity.Member;
+import com.example.miniproject.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

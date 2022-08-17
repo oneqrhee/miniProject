@@ -10,8 +10,9 @@ import com.example.miniproject.repository.LikesRepository;
 import com.example.miniproject.repository.MemberRepository;
 import com.example.miniproject.repository.ProductRepository;
 import com.example.miniproject.s3Service.S3Uploader;
-import com.example.miniproject.security.config.jwt.token.RequestToken;
+import com.example.miniproject.securitytest.config.JwtTokenUtil;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -19,7 +20,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,11 +35,15 @@ public class ProductService {
 
     private final MemberRepository memberRepository;
 
+    @Autowired
+    private JwtTokenUtil jwtTokenUtil;
+
     @Transactional
     public ResponseEntity<String> createProduct(MultipartFile multipartFile, ProductRequestDto productRequestDto,
-                                                String username) throws IOException {
+                                                Member member) throws IOException {
         String imgUrl = s3Uploader.upload(multipartFile, "upload");
-        Member member = memberRepository.findByUsername(username).orElseThrow();
+
+
 
         Product product = Product.builder()
                 .title(productRequestDto.getTitle())
@@ -73,11 +77,7 @@ public class ProductService {
     }
 
     @Transactional(readOnly = true)
-    public ProductResponseDto readProduct(Long productId , HttpServletRequest request) {
-        RequestToken requestToken = new RequestToken(request);
-        Member member = memberRepository.findByUsername(requestToken.getUsername().orElseThrow(
-                () -> new IllegalArgumentException("Can not find username"))).orElseThrow();
-
+    public ProductResponseDto readProduct(Long productId) {
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new IllegalArgumentException("게시글이 존재하지 않습니다."));
         return ProductResponseDto.builder()
@@ -95,11 +95,7 @@ public class ProductService {
     }
 
     @Transactional
-    public ResponseEntity<String> updateProduct(Long productId, ProductRequestDto productRequestDto, HttpServletRequest request) {
-        RequestToken requestToken = new RequestToken(request); // servelet에서 토큰 가져오기
-
-        Member member = memberRepository.findByUsername(requestToken.getUsername().orElseThrow(
-                () -> new IllegalArgumentException("Can not find username"))).orElseThrow();
+    public ResponseEntity<String> updateProduct(Long productId, ProductRequestDto productRequestDto, Member member) {
 
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new IllegalArgumentException("게시글이 존재하지 않습니다."));
@@ -114,11 +110,7 @@ public class ProductService {
     }
 
     @Transactional
-    public ResponseEntity<String> deleteProduct(Long productId, HttpServletRequest request) {
-        RequestToken requestToken = new RequestToken(request); // servelet에서 토큰 가져오기
-
-        Member member = memberRepository.findByUsername(requestToken.getUsername().orElseThrow(
-                () -> new IllegalArgumentException("Can not find username"))).orElseThrow();
+    public ResponseEntity<String> deleteProduct(Long productId, Member member) {
 
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new IllegalArgumentException("게시글이 존재하지 않습니다."));

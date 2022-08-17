@@ -8,8 +8,9 @@ import com.example.miniproject.entity.Product;
 import com.example.miniproject.repository.CommentRepository;
 import com.example.miniproject.repository.MemberRepository;
 import com.example.miniproject.repository.ProductRepository;
-import com.example.miniproject.security.config.jwt.token.RequestToken;
+import com.example.miniproject.securitytest.config.JwtTokenUtil;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,14 +29,19 @@ public class CommentService {
 
     private final ProductRepository productRepository;
 
+    @Autowired
+    private JwtTokenUtil jwtTokenUtil;
+
 
     @Transactional
     public CommentResponseDto createComment(Long productId, CommentRequestDto requestDto, HttpServletRequest request) {
-        // 멤버 유효성 검사
-        RequestToken requestToken = new RequestToken(request); // servelet에서 토큰 가져오기
+        String requestTokenHeader = request.getHeader("Authorization");
+        String jwtToken = requestTokenHeader.substring(7);
+        String username = jwtTokenUtil.getUsernameFromToken(jwtToken);
+        Member member = memberRepository.findByUsername(username).orElseThrow(
+                () -> new IllegalArgumentException("검증되지 않은 회원입니다.")
+        );
 
-        Member member = memberRepository.findByUsername(requestToken.getUsername().orElseThrow(
-                () -> new IllegalArgumentException("Can not find username"))).orElseThrow();
 
         //포스트 id 검사
         Product product = productRepository.findById(productId).orElseThrow(
@@ -84,11 +90,12 @@ public class CommentService {
 
     public CommentResponseDto updateComment(Long commentId, CommentRequestDto requestDto,
                                             HttpServletRequest request) {
-        //멤버 유효성 검사
-        RequestToken requestToken = new RequestToken(request); // servelet에서 토큰 가져오기
-
-        Member member = memberRepository.findByUsername(requestToken.getUsername().orElseThrow(
-                () -> new IllegalArgumentException("Can not find username"))).orElseThrow();
+        String requestTokenHeader = request.getHeader("Authorization");
+        String jwtToken = requestTokenHeader.substring(7);
+        String username = jwtTokenUtil.getUsernameFromToken(jwtToken);
+        Member member = memberRepository.findByUsername(username).orElseThrow(
+                () -> new IllegalArgumentException("검증되지 않은 회원입니다.")
+        );
 
         //댓글 id 검사
         Comment comment = isPresentComment(commentId);
@@ -115,10 +122,12 @@ public class CommentService {
 
     public void deleteComment(Long commentId, HttpServletRequest request) {
         //멤버 유효성 검사
-        RequestToken requestToken = new RequestToken(request); // servelet에서 토큰 가져오기
-
-        Member member = memberRepository.findByUsername(requestToken.getUsername().orElseThrow(
-                () -> new IllegalArgumentException("Can not find username"))).orElseThrow();
+        String requestTokenHeader = request.getHeader("Authorization");
+        String jwtToken = requestTokenHeader.substring(7);
+        String username = jwtTokenUtil.getUsernameFromToken(jwtToken);
+        Member member = memberRepository.findByUsername(username).orElseThrow(
+                () -> new IllegalArgumentException("검증되지 않은 회원입니다.")
+        );       // servelet에서 토큰 가져오기
 
         //댓글 id 검사
         Comment comment = isPresentComment(commentId);

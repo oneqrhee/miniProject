@@ -1,55 +1,49 @@
 package com.example.miniproject.controller;
 
-import com.example.miniproject.dto.request.LoginRequestDto;
+import com.example.miniproject.dto.MemberDto;
 import com.example.miniproject.dto.request.MemberRequestDto;
 import com.example.miniproject.dto.response.ResponseDto;
+import com.example.miniproject.repository.MemberRepository;
 import com.example.miniproject.service.MemberService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletResponse;
-
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/member")
 public class MemberController {
 
-    @Autowired
-    private final MemberService memberService;
+    final MemberService memberService;
 
-    private AuthenticationManager authenticationManager;
-
-    public MemberController(MemberService memberService) {
-        this.memberService = memberService;
-    }
-
+    private MemberRepository memberRepository;
 
     @PostMapping("/signup")
-    public ResponseDto<String> signup(@RequestBody MemberRequestDto requestDto){
-        return memberService.signup(requestDto);
+    public ResponseDto<String> saveMember(@RequestBody MemberDto memberDto) {
+        return memberService.saveMember(memberDto);
     }
 
     @PostMapping("/checkId")
     public ResponseDto<String> checkId(@RequestBody MemberRequestDto requestDto){
-        return memberService.checkId(requestDto);
+        if(memberRepository.findByUsername(requestDto.username).isPresent()){
+            return new ResponseDto<>(HttpStatus.OK, "사용중인 Username입니다.");
+        }
+        return new ResponseDto<>(HttpStatus.OK, "사용 가능한 Username입니다.");
+
     }
-
-
 
     @PostMapping("/checkNick")
     public ResponseDto<String> checkNick(@RequestBody MemberRequestDto requestDto){
-        return memberService.checkNick(requestDto);
+        if(memberRepository.findByUsername(requestDto.nickname).isPresent()){
+            return new ResponseDto<>(HttpStatus.OK, "사용중인 Nickname입니다.");
+        }
+        return new ResponseDto<>(HttpStatus.OK, "사용 가능한 Nickname입니다.");
+
     }
 
-    @PostMapping("/login")
-    public ResponseDto<String> login(HttpServletResponse response, @RequestBody LoginRequestDto dto){
-        String accessToken = memberService.login(dto);
-        response.setHeader("Authorization","Bearer " + accessToken);
 
-        return new ResponseDto<>(HttpStatus.OK,"로그인 성공");
-    }
 }
+

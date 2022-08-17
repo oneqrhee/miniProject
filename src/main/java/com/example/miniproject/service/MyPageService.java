@@ -5,30 +5,23 @@ import com.example.miniproject.entity.Likes;
 import com.example.miniproject.entity.Member;
 import com.example.miniproject.entity.Product;
 import com.example.miniproject.repository.LikesRepository;
-import com.example.miniproject.repository.MemberRepository;
 import com.example.miniproject.repository.ProductRepository;
-import com.example.miniproject.security.config.jwt.token.RequestToken;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class MyPageService {
-    private final MemberRepository memberRepository;
     private final ProductRepository productRepository;
     private final LikesRepository likesRepository;
 
-    @Transactional(readOnly = true)
-    public List<ProductsResponseDto> readMyProducts(HttpServletRequest request) {
-        RequestToken requestToken = new RequestToken(request); // servelet에서 토큰 가져오기
 
-        Member member = memberRepository.findByUsername(requestToken.getUsername().orElseThrow(
-                () -> new IllegalArgumentException("Can not find username"))).orElseThrow();
+    @Transactional(readOnly = true)
+    public List<ProductsResponseDto> readMyProducts(Member member) {
 
         List<Product> products = productRepository.findAllByMember(member);
         List<ProductsResponseDto> myProducts = new ArrayList<>();
@@ -47,11 +40,7 @@ public class MyPageService {
     }
 
     @Transactional(readOnly = true)
-    public List<ProductsResponseDto> readMyProductsLikes(HttpServletRequest request) {
-        RequestToken requestToken = new RequestToken(request); // servelet에서 토큰 가져오기
-
-        Member member = memberRepository.findByUsername(requestToken.getUsername().orElseThrow(
-                () -> new IllegalArgumentException("Can not find username"))).orElseThrow();
+    public List<ProductsResponseDto> readMyProductsLikes(Member member) {
 
         List<Likes> likesList = likesRepository.findAllByMemberAndProductIsNotNull(member);
         List<Product> myProductsLikes = new ArrayList<>();

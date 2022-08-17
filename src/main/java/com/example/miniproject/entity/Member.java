@@ -1,40 +1,38 @@
 package com.example.miniproject.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
-@Builder
-@AllArgsConstructor
 @Entity
 @Getter
-@NoArgsConstructor
-
-public class Member extends Timestamped{
+@ToString
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+public class Member {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "member_id")
     private Long id;
 
-    @Column(nullable = false, unique = true)
+    @Column(unique = true)
     private String username;
-
-    @Column(nullable = false)
     private String password;
 
-    @Column(nullable = false, unique = true)
+    @Column(unique = true)
     private String nickname;
 
-    @Column
-    private LocalDateTime createdAt;
+    public Member(String username, String password,String nickname) {
+        this.username = username;
+        this.password = password;
+        this.nickname = nickname;
+    }
 
-
-
-
-
+    public static Member createMember(String username, String password , String nickname) {
+        return new Member(username,password,nickname);
+    }
 
 }
