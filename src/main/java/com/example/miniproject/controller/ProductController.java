@@ -4,7 +4,6 @@ package com.example.miniproject.controller;
 import com.example.miniproject.dto.request.ProductRequestDto;
 import com.example.miniproject.dto.response.ProductResponseDto;
 import com.example.miniproject.dto.response.ProductsResponseDto;
-import com.example.miniproject.security.config.jwt.token.RequestToken;
 import com.example.miniproject.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -24,8 +23,8 @@ public class ProductController {
 
     @PostMapping("/product")
     public ResponseEntity<String> createProduct(@RequestPart MultipartFile multipartFile, @RequestPart ProductRequestDto productRequestDto,
-                                        HttpServletRequest request) throws IOException {
-        return productService.createProduct(multipartFile, productRequestDto, getUsernameByRequest(request));
+                                                HttpServletRequest request) throws IOException {
+        return productService.createProduct(multipartFile, productRequestDto, request);
     }
 
     @GetMapping("/products")
@@ -50,9 +49,9 @@ public class ProductController {
         return productService.deleteProduct(productId, request);
     }
 
-    private String getUsernameByRequest(HttpServletRequest request) {
-        RequestToken requestToken = new RequestToken(request);
-        return requestToken.getUsername().orElseThrow();
-    }
+//    private String getUsernameByRequest(HttpServletRequest request) {
+//        RequestToken requestToken = new RequestToken(request);
+//        return requestToken.getUsername().orElseThrow();
+//    }
 
 }

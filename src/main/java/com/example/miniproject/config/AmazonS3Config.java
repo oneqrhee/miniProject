@@ -1,4 +1,4 @@
-package com.example.miniproject.s3Config;
+package com.example.miniproject.config;
 
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;

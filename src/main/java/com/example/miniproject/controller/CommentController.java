@@ -4,6 +4,7 @@ import com.example.miniproject.dto.request.CommentRequestDto;
 import com.example.miniproject.dto.response.CommentResponseDto;
 import com.example.miniproject.service.CommentService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,7 +16,7 @@ public class CommentController {
     private final CommentService commentService;
 
     @PostMapping("/api/comments/{productId}")
-    public CommentResponseDto createComment(@PathVariable Long productId, @RequestBody CommentRequestDto requestDto, HttpServletRequest request){
+    public ResponseEntity<String> createComment(@PathVariable Long productId, @RequestBody CommentRequestDto requestDto, HttpServletRequest request){
         return commentService.createComment(productId, requestDto, request);
     }
 
@@ -25,13 +26,13 @@ public class CommentController {
     }
 
     @PutMapping("/api/comments/{commentId}")
-    public CommentResponseDto updateComment(@PathVariable Long commentId, @RequestBody CommentRequestDto requestDto,
-                                            HttpServletRequest request ){
+    public ResponseEntity<String> updateComment(@PathVariable Long commentId, @RequestBody CommentRequestDto requestDto,
+                                                HttpServletRequest request ){
         return commentService.updateComment(commentId, requestDto, request);
     }
 
     @DeleteMapping("/api/comments/{commentId}")
-    public void deleteComment(@PathVariable Long commentId, HttpServletRequest request){
-         commentService.deleteComment(commentId, request);
+    public ResponseEntity<String> deleteComment(@PathVariable Long commentId, HttpServletRequest request){
+         return commentService.deleteComment(commentId, request);
     }
 }
