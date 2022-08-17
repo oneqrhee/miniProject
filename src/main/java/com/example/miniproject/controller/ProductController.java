@@ -39,8 +39,10 @@ public class ProductController {
     }
 
     @PutMapping("/product/{productId}")
-    public ResponseEntity<String> updateProduct(@PathVariable Long productId, @RequestBody ProductRequestDto productRequestDto, HttpServletRequest request) {
-        return productService.updateProduct(productId, productRequestDto, request);
+    public ResponseEntity<String> updateProduct(@PathVariable Long productId,
+                                                @RequestPart ProductRequestDto productRequestDto,
+                                                @RequestPart MultipartFile multipartFile, HttpServletRequest request) throws IOException {
+        return productService.updateProduct(productId, productRequestDto, multipartFile, request);
     }
 
     @DeleteMapping("/product/{productId}")

@@ -10,11 +10,12 @@ import com.example.miniproject.security.config.auth.PrincipalDetailsService;
 import com.example.miniproject.security.config.jwt.token.ResponseToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.RequestBody;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.regex.Matcher;
@@ -33,21 +34,12 @@ public class MemberService {
 
     private PrincipalDetailsService principalDetailsService;
 
-    public ResponseDto<String> checkId(MemberRequestDto dto) {
-        if (memberRepository.findByUsername(dto.getUsername()).isPresent()) {
-            return new ResponseDto<>(HttpStatus.OK, "이미 가입된 Id입니다.");
-
-        }
-
-        return new ResponseDto<>(HttpStatus.OK, "사용가능한 Id 입니다.");
+    public boolean checkId(MemberRequestDto dto) {
+        return memberRepository.findByUsername(dto.getUsername()).isEmpty();
     }
 
-    public ResponseDto<String> checkNick(MemberRequestDto dto) {
-        if (memberRepository.findByNickname(dto.getNickname()).isPresent()) {
-            return new ResponseDto<>(HttpStatus.OK, "사용중인 닉네임입니다.");
-        }
-
-        return new ResponseDto<>(HttpStatus.OK, "사용가능한 닉네임입니다.");
+    public boolean checkNick(MemberRequestDto dto) {
+        return memberRepository.findByNickname(dto.getNickname()).isEmpty();
     }
 
     @Transactional
@@ -103,14 +95,17 @@ public class MemberService {
 
 
     @Transactional
-    public String login( @RequestBody LoginRequestDto dto) {
+    public String login(LoginRequestDto dto, HttpServletResponse response) {
         Member member = memberRepository.findByUsername(dto.getUsername()).orElseThrow();
         if (passwordEncoder.matches(member.getPassword(),dto.getPassword())) {
             throw new IllegalArgumentException("회원정보가 일치하지 않습니다.");
         }
 
         ResponseToken responseToken = new ResponseToken(member.getUsername());
-        return responseToken.getAccessToken();
+//        return responseToken.getAccessToken();
+        String accessToken = responseToken.getAccessToken();
+        response.setHeader("Authorization","Bearer " + accessToken);
+        return member.getNickname();
     }
 }
 

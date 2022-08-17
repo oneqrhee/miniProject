@@ -43,17 +43,18 @@ public class Product extends Timestamped{
     private String nickname;
 
     @ManyToOne
-    @JoinColumn(nullable = false)
+    @JoinColumn
     private Member member;
 
     @OneToMany(mappedBy = "product")
     private List<Comment> commentList;
 
 
-    public void updateProduct(ProductRequestDto productRequestDto){
-        this.title = productRequestDto.getTitle();
-        this.size = productRequestDto.getSize();
-        this.price = productRequestDto.getPrice();
-        this.content = productRequestDto.getContent();
+    public void updateProduct(String title, int size, int price, String content, String imgUrl){
+        this.title = title;
+        this.size = size;
+        this.price = price;
+        this.content = content;
+        this.imgUrl = imgUrl;
     }
 }

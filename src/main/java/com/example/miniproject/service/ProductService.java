@@ -59,6 +59,7 @@ public class ProductService {
         List<ProductsResponseDto> productList = new ArrayList<>();
         for (Product product : products) {
             productList.add(ProductsResponseDto.builder()
+                    .id(product.getId())
                     .title(product.getTitle())
                     .size(product.getSize())
                     .nickname(product.getNickname())
@@ -76,6 +77,7 @@ public class ProductService {
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new IllegalArgumentException("게시글이 존재하지 않습니다."));
         return ProductResponseDto.builder()
+                .id(product.getId())
                 .title(product.getTitle())
                 .size(product.getSize())
                 .nickname(product.getNickname())
@@ -90,7 +92,8 @@ public class ProductService {
     }
 
     @Transactional
-    public ResponseEntity<String> updateProduct(Long productId, ProductRequestDto productRequestDto, HttpServletRequest request) {
+    public ResponseEntity<String> updateProduct(Long productId, ProductRequestDto productRequestDto,
+                                                MultipartFile multipartFile, HttpServletRequest request) throws IOException {
         RequestToken requestToken = new RequestToken(request); // servelet에서 토큰 가져오기
 
         Member member = memberRepository.findByUsername(requestToken.getUsername().orElseThrow(
@@ -102,7 +105,10 @@ public class ProductService {
         if (!product.getNickname().equals(member.getNickname())) {
             return new ResponseEntity<>("작성자만 수정할 수 있습니다", HttpStatus.UNAUTHORIZED);
         }
-        product.updateProduct(productRequestDto);
+        String imgUrl = s3Uploader.upload(multipartFile, "upload");
+
+        product.updateProduct(productRequestDto.getTitle(), productRequestDto.getSize(), productRequestDto.getPrice(),
+                productRequestDto.getContent(), imgUrl);
 
         return new ResponseEntity<>("글이 수정되었습니다.", HttpStatus.OK);
 

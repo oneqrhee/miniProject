@@ -9,6 +9,7 @@ import java.util.List;
 @Builder
 @Getter
 public class ProductResponseDto {
+    private Long id;
     private String title;
     private String nickname;
     private String imgUrl;

@@ -6,6 +6,7 @@ import com.example.miniproject.dto.response.ResponseDto;
 import com.example.miniproject.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -34,22 +35,20 @@ public class MemberController {
     }
 
     @PostMapping("/checkId")
-    public ResponseDto<String> checkId(@RequestBody MemberRequestDto requestDto){
+    public boolean checkId(@RequestBody MemberRequestDto requestDto){
         return memberService.checkId(requestDto);
     }
 
-
-
-    @PostMapping("/checkNick")
-    public ResponseDto<String> checkNick(@RequestBody MemberRequestDto requestDto){
+    @PostMapping("/checkNickname")
+    public boolean checkNick(@RequestBody MemberRequestDto requestDto){
         return memberService.checkNick(requestDto);
     }
 
     @PostMapping("/login")
-    public ResponseDto<String> login(HttpServletResponse response, @RequestBody LoginRequestDto dto){
-        String accessToken = memberService.login(dto);
-        response.setHeader("Authorization","Bearer " + accessToken);
+    public String login(HttpServletResponse response, @RequestBody LoginRequestDto dto){
+//        String accessToken = memberService.login(dto);
+//        response.setHeader("Authorization","Bearer " + accessToken);
 
-        return new ResponseDto<>(HttpStatus.OK,"로그인 성공");
+        return memberService.login(dto, response);
     }
 }
