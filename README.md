@@ -16,7 +16,9 @@
 
  신발 리셀링 사이트 , 추첨받은 신발이 사이즈가 안맞거나 추첨받지 못해 아쉬웠던 새 신발들을 서로 교환하거나 거래하는 사이트입니다. 사이즈 정보를 등록하고 마음에 드는 상품을 찜할 수 있습니다.
 
-****🛠****주요기술
+## ****🛠주요기술****
+
+
 <img src="https://img.shields.io/badge/java-007396?style=for-the-badge&logo=java&logoColor=white">
 <img src="https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=black">
 <img src="https://img.shields.io/badge/amazonaws-232F3E?style=for-the-badge&logo=amazonaws&logoColor=white">
