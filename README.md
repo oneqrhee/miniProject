@@ -3,6 +3,7 @@
 # 👟뉴킥스온더블록(New kicks on the block)
 
 ![rm.png](https://github.com/hh99MiniProject/miniProject/blob/master/rm.png?raw=true)
+This is not for real commercial project, Its only for pratice.
 
 ## ****🗓 프로젝트 기간****
 
