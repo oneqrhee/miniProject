@@ -28,10 +28,9 @@ This is not for real commercial project, Its only for pratice.
 
 
 
-<aside>
-🖼️ **와이어프레임 설계**
 
-</aside>
+## ****🖼️ 와이어프레임 설계****🖼
+
 
 - 펼쳐보기
     
