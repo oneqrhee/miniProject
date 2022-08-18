@@ -80,7 +80,6 @@ This is not for real commercial project, Its only for pratice.
 #### 5.Post
 <img src="https://github.com/hh99MiniProject/miniProject/blob/master/post.png?raw=true" width="600"/>
 - 제품등록 페이지입니다.<br>
-- 
 
 #### 6.MyPage
 
