@@ -10,12 +10,6 @@ This is not for real commercial project, Its only for pratice.
 - 2022.08.12 ~ 2022.08.18
 
 ## ****⭐️ 팀 구성****
-이원규	https://github.com/oneqrhee	Backend
-임준철	https://github.com/juncheol	Backend
-이호재	https://github.com/ghwo68	Backend
-전지만	https://github.com/Camof1ow	Backend
-우종훈	https://github.com/Jhoon2	Frontend
-이용규	https://github.com/chipmunkcol	Frontend
 
 |이름|팀원 깃허브|포지션|
 |---|---|---|
@@ -40,19 +34,19 @@ This is not for real commercial project, Its only for pratice.
 
 <img src="https://img.shields.io/badge/springboot-6DB33F?style=for-the-badge&logo=springboot&logoColor=white"><img src="https://img.shields.io/badge/spring-6DB33F?style=for-the-badge&logo=spring&logoColor=white"><img src="https://img.shields.io/badge/firebase-FFCA28?style=for-the-badge&logo=firebase&logoColor=white">
 
-
-
-
-## ****🖼️ 와이어프레임 설계****
-
-
     
 ## ****💡 ERD****
+![erd.png]
 
 
 
-## ****🚪 API****
 
+## ****🖼️ 프로젝트 상세****
+
+## ***1.Sign up***
+## ***1.Sign up***
+## ***1.Sign up***
+## ***1.Sign up***
 
 
 ## ****🔥 Repositories****
