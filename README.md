@@ -54,6 +54,7 @@ This is not for real commercial project, Its only for pratice.
 
 #### 1.Sign up
 
+<img src="https://github.com/hh99MiniProject/miniProject/blob/master/signup.png?raw=true" width="600"/>
 -회원가입 페이지입니다.<br>
 -아이디와 닉네임을 체크 편의기능을 추가하였습니다.<br><br>
 
