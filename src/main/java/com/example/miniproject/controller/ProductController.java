@@ -22,9 +22,9 @@ public class ProductController {
 
 
     @PostMapping("/product")
-    public ResponseEntity<String> createProduct(@RequestPart MultipartFile multipartFile, @RequestPart ProductRequestDto productRequestDto,
-                                                HttpServletRequest request) throws IOException {
-        return productService.createProduct(multipartFile, productRequestDto, request);
+    public ResponseEntity<String> createProduct(@RequestBody ProductRequestDto productRequestDto,
+                                                HttpServletRequest request) {
+        return productService.createProduct(productRequestDto, request);
     }
 
     @GetMapping("/products")
@@ -39,9 +39,9 @@ public class ProductController {
 
     @PutMapping("/product/{productId}")
     public ResponseEntity<String> updateProduct(@PathVariable Long productId,
-                                                @RequestPart ProductRequestDto productRequestDto,
-                                                @RequestPart MultipartFile multipartFile, HttpServletRequest request) throws IOException {
-        return productService.updateProduct(productId, productRequestDto, multipartFile, request);
+                                                @RequestBody ProductRequestDto productRequestDto,
+                                                HttpServletRequest request) {
+        return productService.updateProduct(productId, productRequestDto, request);
     }
 
     @DeleteMapping("/product/{productId}")

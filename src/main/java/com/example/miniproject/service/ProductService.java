@@ -36,16 +36,15 @@ public class ProductService {
     private final TokenProvider tokenProvider;
 
     @Transactional
-    public ResponseEntity<String> createProduct(MultipartFile multipartFile, ProductRequestDto productRequestDto,
-                                                HttpServletRequest request) throws IOException {
+    public ResponseEntity<String> createProduct(ProductRequestDto productRequestDto, HttpServletRequest request){
         Member member = validateMember(request);
         if (null == member) {
             return new ResponseEntity<>("INVALID_TOKEN", HttpStatus.BAD_REQUEST);
         }
-        String imgUrl = s3Uploader.upload(multipartFile, "upload");
+//        String imgUrl = s3Uploader.upload(multipartFile, "upload");
         Product product = Product.builder()
                 .title(productRequestDto.getTitle())
-                .imgUrl(imgUrl)
+                .imgUrl(productRequestDto.getImgUrl())
                 .size(productRequestDto.getSize())
                 .price(productRequestDto.getPrice())
                 .content(productRequestDto.getContent())
@@ -96,7 +95,7 @@ public class ProductService {
 
     @Transactional
     public ResponseEntity<String> updateProduct(Long productId, ProductRequestDto productRequestDto,
-                                                MultipartFile multipartFile, HttpServletRequest request) throws IOException {
+                                                HttpServletRequest request){
 
         Member member = validateMember(request);
         if (null == member) {
@@ -114,10 +113,10 @@ public class ProductService {
         if (!product.getNickname().equals(member.getNickname())) {
             return new ResponseEntity<>("작성자만 수정할 수 있습니다", HttpStatus.UNAUTHORIZED);
         }
-        String imgUrl = s3Uploader.upload(multipartFile, "upload");
+//        String imgUrl = s3Uploader.upload(multipartFile, "upload");
 
         product.updateProduct(productRequestDto.getTitle(), productRequestDto.getSize(), productRequestDto.getPrice(),
-                productRequestDto.getContent(), imgUrl);
+                productRequestDto.getContent(), productRequestDto.getImgUrl());
 
         return new ResponseEntity<>("글이 수정되었습니다.", HttpStatus.OK);
 
