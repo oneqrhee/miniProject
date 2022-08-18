@@ -5,6 +5,17 @@
 ![rm.png](https://github.com/hh99MiniProject/miniProject/blob/master/rm.png?raw=true)
 This is not for real commercial project, Its only for pratice.
 
+
+## ****🤷‍♂️ 프로젝트 목적****
+이 프로젝트는 항해99의 미니프로젝트 과제로<br>
+상업적 목적이 없으며 개인의 기술 공부 목적으로 만들어졌으며 <br>
+나아가 협업을 배우고 백엔드 - 프론트엔드 커뮤니케이션을 익히려는 목적으로 만들어졌습니다.<br><br>
+
+## ****🍀 프로젝트 소개****
+
+ 추첨받은 신발이 사이즈가 안맞거나 추첨받지 못해 아쉬웠던 새 신발들을 찾아<br>
+ 서로 교환하거나 거래하는 사이트입니다. 사이즈 정보를 등록하고 마음에 드는 상품을 찾아 내껄로 만드세요.<br><br>
+
 ## ****🗓 프로젝트 기간****
 
 - 2022.08.12 ~ 2022.08.18
@@ -21,9 +32,7 @@ This is not for real commercial project, Its only for pratice.
 |이용규|https://github.com/chipmunkcol|Front-end|
 
 
-## ****🍀 프로젝트 소개****
 
- 신발 리셀링 사이트 , 추첨받은 신발이 사이즈가 안맞거나 추첨받지 못해 아쉬웠던 새 신발들을 서로 교환하거나 거래하는 사이트입니다. 사이즈 정보를 등록하고 마음에 드는 상품을 찜할 수 있습니다.
 
 ## ****🛠주요기술****
 
@@ -43,13 +52,17 @@ This is not for real commercial project, Its only for pratice.
 
 ## ****🖼️ 프로젝트 상세****
 
-## ***1.Sign up***
-## ***1.Sign up***
-## ***1.Sign up***
-## ***1.Sign up***
+#### 1.Sign up
+
+#### 2.Log in
+
+#### 3.Home
+
+#### 4.Detail
+
+#### 5.Post
 
 
-## ****🔥 Repositories****
 
 
 - BACK-END
