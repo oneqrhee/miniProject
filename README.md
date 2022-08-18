@@ -53,7 +53,7 @@ This is not for real commercial project, Its only for pratice.
 ## ****🖼️ 프로젝트 상세****
 
 #### 1.Sign up
-<img src="https://github.com/hh99MiniProject/miniProject/blob/master/sc1.png?raw=true" width="600"/>
+
 -회원가입 페이지입니다.<br>
 -아이디와 닉네임을 체크 편의기능을 추가하였습니다.<br><br>
 
@@ -63,6 +63,7 @@ This is not for real commercial project, Its only for pratice.
 -아이디와 비밀번호를 입력받아 로그인합니다.<br><br>
 
 #### 3.Home
+<img src="https://github.com/hh99MiniProject/miniProject/blob/master/sc1.png?raw=true" width="600"/>
 -메인페이지입니다. 등록된 제품의 사진이 카드 목록으로 노출됩니다.<br>
 -로그인 이용자에게는 '제품등록', '로그아웃' 버튼이 비로그인 이용자에게는 '로그인', '회원가입'버튼이 보입니다.<br><br>
 
