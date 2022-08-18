@@ -1,8 +1,8 @@
-# 제목 없음
 
-![rm.png](%E1%84%8C%E1%85%A6%E1%84%86%E1%85%A9%E1%86%A8%20%E1%84%8B%E1%85%A5%E1%86%B9%E1%84%8B%E1%85%B3%E1%86%B7%2069b4e5f8bfe84f0da945344a5fa6a252/rm.png)
 
 # 👟뉴킥스온더블록(New kicks on the block)
+
+![rm.png](https://github.com/hh99MiniProject/miniProject/blob/master/rm.png?raw=true)
 
 ## ****🗓 프로젝트 기간****
 
@@ -17,6 +17,13 @@
  신발 리셀링 사이트 , 추첨받은 신발이 사이즈가 안맞거나 추첨받지 못해 아쉬웠던 새 신발들을 서로 교환하거나 거래하는 사이트입니다. 사이즈 정보를 등록하고 마음에 드는 상품을 찜할 수 있습니다.
 
 ****🛠****주요기술
+<img src="https://img.shields.io/badge/java-007396?style=for-the-badge&logo=java&logoColor=white">
+<img src="https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=black">
+<img src="https://img.shields.io/badge/amazonaws-232F3E?style=for-the-badge&logo=amazonaws&logoColor=white">
+<img src="https://img.shields.io/badge/gradle-02303A?style=for-the-badge&logo=gradle&logoColor=white">
+<img src="https://img.shields.io/badge/springboot-6DB33F?style=for-the-badge&logo=springboot&logoColor=white">
+<img src="https://img.shields.io/badge/spring-6DB33F?style=for-the-badge&logo=spring&logoColor=white">
+<img src="https://img.shields.io/badge/firebase-FFCA28?style=for-the-badge&logo=firebase&logoColor=white">
 
 <aside>
 🖼️ **와이어프레임 설계**
