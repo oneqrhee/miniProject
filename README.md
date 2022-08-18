@@ -72,16 +72,19 @@ This is not for real commercial project, Its only for pratice.
 
 
 #### 4.Detail
-<img src="https://github.com/hh99MiniProject/miniProject/blob/master/sc1.png?raw=true" width="600"/>
+
+<img src="https://github.com/hh99MiniProject/miniProject/blob/master/detail.png?raw=true" width="600"/><br>
 -등록된 게시글 페이지입니다.<br>
 -해당 게시글 작성자만 게시글을 작성할 수 있습니다.<br>
 -해당 댓글도 작성자만 댓글을 작성할 수 있습니다.<br><br>
 
 #### 5.Post
-<img src="https://github.com/hh99MiniProject/miniProject/blob/master/post.png?raw=true" width="600"/>
+
+<img src="https://github.com/hh99MiniProject/miniProject/blob/master/post.png?raw=true" width="600"/><br>
 - 제품등록 페이지입니다.<br>
 
 #### 6.MyPage
+<img src="https://github.com/hh99MiniProject/miniProject/blob/master/likepage.png?raw=true" width="600"/><br>
 
 - 좋아요를 누른 제품페이지를 확인할 수 있습니다. <br>
 
