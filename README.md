@@ -45,7 +45,7 @@ This is not for real commercial project, Its only for pratice.
 
     
 ## ****💡 ERD****
-![Untitled 1.png]https://github.com/hh99MiniProject/miniProject/blob/master/Untitled%201.png?raw=true
+![Untitled 1.png](https://github.com/hh99MiniProject/miniProject/blob/master/Untitled%201.png?raw=true)
 
 
 
