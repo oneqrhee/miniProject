@@ -19,12 +19,12 @@ This is not for real commercial project, Its only for pratice.
 
 |이름|팀원 깃허브|포지션|
 |---|---|---|
-|이원규|https://github.com/oneqrhee|내용 3|
-|임준철|[내용 6](https://github.com/juncheol)|내용 7|
-|이호재|[내용 10](https://github.com/ghwo68)|내용 11|
-|전지만|[내용 2](https://github.com/Camof1ow)|내용 3|
-|우종훈|[내용 6](https://github.com/Jhoon2)|내용 7|
-|이용규|https://github.com/chipmunkcol|내용 11|
+|이원규|https://github.com/oneqrhee|Back-end|
+|임준철|https://github.com/juncheol|Back-end|
+|이호재|https://github.com/ghwo68|Back-end|
+|전지만|https://github.com/Camof1ow|Back-end|
+|우종훈|https://github.com/Jhoon2|Front-end|
+|이용규|https://github.com/chipmunkcol|Front-end|
 
 
 ## ****🍀 프로젝트 소개****
