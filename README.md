@@ -54,19 +54,19 @@ This is not for real commercial project, Its only for pratice.
 
 #### 1.Sign up
 
-<img src="https://github.com/hh99MiniProject/miniProject/blob/master/signup.png?raw=true" width="600"/>
+<img src="https://github.com/hh99MiniProject/miniProject/blob/master/signup.png?raw=true" width="600"/><br>
 -회원가입 페이지입니다.<br>
 -아이디와 닉네임을 체크 편의기능을 추가하였습니다.<br><br>
 
 #### 2.Log in
 
-<img src="https://github.com/hh99MiniProject/miniProject/blob/master/login.png?raw=true" width="600"/>
+<img src="https://github.com/hh99MiniProject/miniProject/blob/master/login.png?raw=true" width="600"/><br>
 -로그인 페이지입니다.<br>
 -아이디와 비밀번호를 입력받아 로그인합니다.<br><br>
 
 #### 3.Home
-https://github.com/hh99MiniProject/miniProject/blob/master/main.png?raw=true
-<img src="https://github.com/hh99MiniProject/miniProject/blob/master/main.png?raw=true" width="600"/>
+
+<img src="https://github.com/hh99MiniProject/miniProject/blob/master/main.png?raw=true" width="600"/><br>
 -메인페이지입니다. 등록된 제품의 사진이 카드 목록으로 노출됩니다.<br>
 -로그인 이용자에게는 '제품등록', '로그아웃' 버튼이 비로그인 이용자에게는 '로그인', '회원가입'버튼이 보입니다.<br><br>
 
@@ -83,7 +83,7 @@ https://github.com/hh99MiniProject/miniProject/blob/master/main.png?raw=true
 - 
 
 #### 6.MyPage
-<img src="https://github.com/hh99MiniProject/miniProject/blob/master/sc1.png?raw=true" width="600"/>
+
 - 좋아요를 누른 제품페이지를 확인할 수 있습니다. <br>
 
 
